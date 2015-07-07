@@ -18,6 +18,15 @@ ApplicationWindow {
 
     menuBar: MenuBar {
         Menu {
+            title: qsTr("&Program")
+            MenuItem {
+                text: "&Build Program"
+                onTriggered: console.log("build program")
+                shortcut: "Ctrl+b"
+            }
+        }
+
+        Menu {
             title: qsTr("&Window")
             MenuItem {
                 text: qsTr("&Minimize")
