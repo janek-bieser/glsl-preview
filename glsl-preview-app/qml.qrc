@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>Inspector.qml</file>
+        <file>OGLViewport.qml</file>
+        <file>ShaderSelectionMenu.qml</file>
+        <file>FileInput.qml</file>
     </qresource>
 </RCC>
