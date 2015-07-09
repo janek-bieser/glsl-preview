@@ -3,7 +3,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
 Rectangle {
-    color: "lightgray"
+    color: "#dedede"
 
     SplitView {
 
@@ -13,11 +13,17 @@ Rectangle {
         handleDelegate: Rectangle {
             height: 28
             color: "#777"
+
+            border.width: 1
+            anchors.margins: -1
+            anchors.left: parent.left
+            anchors.right: parent.right
+
             Text {
                 anchors.centerIn: parent
                 text: "Builtins"
                 font.pointSize: 16
-                color: "#eee"
+                color: "#f3f3f3"
             }
         }
 
@@ -32,13 +38,16 @@ Rectangle {
                 anchors.top: parent.top
                 height: 28
 
+                border.width: 1
+                anchors.margins: -1
+
                 color: "#777"
 
                 Text {
                     anchors.centerIn: parent
                     text: "Uniforms"
                     font.pointSize: 16
-                    color: "#eee"
+                    color: "#f3f3f3"
                 }
             }
 
@@ -69,7 +78,7 @@ Rectangle {
             }
         }
 
-        Rectangle {
+        Item {
             height: 100
 
             ScrollView {
