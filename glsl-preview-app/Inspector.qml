@@ -29,6 +29,7 @@ Rectangle {
 
         Item {
             Layout.fillHeight: true
+            Layout.minimumHeight: 200
 
             Rectangle {
                 id: uniformsHeader
@@ -56,7 +57,6 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 anchors.top: uniformsHeader.bottom
-                anchors.topMargin: 10
 
                 ListView {
                     model: ListModel {
@@ -70,6 +70,7 @@ Rectangle {
                         height: 65
                         LabeledVectorInput {
                             id: _vi
+                            anchors.verticalCenter: parent.verticalCenter
                             label: name
                             numOfComponents: componentCount
                         }

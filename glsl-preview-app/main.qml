@@ -13,7 +13,7 @@ ApplicationWindow {
     height: 600
     visible: true
 
-    minimumWidth: 800
+    minimumWidth: 850
     minimumHeight: 500
 
     menuBar: MenuBar {
@@ -62,12 +62,12 @@ ApplicationWindow {
 
         ShaderSelectionMenu {
             id: shaderMenu
-            anchors.centerIn: parent
+            anchors.centerIn: glViewport
 
             radius: 5
 
             onFilesSelected: {
-                console.log(sources.vertex, sources.fragment);
+                glViewport.loadShader(sources);
             }
         }
     }
