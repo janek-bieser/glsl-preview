@@ -12,10 +12,12 @@ Rectangle {
 
         handleDelegate: Rectangle {
             height: 28
-            color: "#888"
+            color: "#777"
             Text {
                 anchors.centerIn: parent
                 text: "Builtins"
+                font.pointSize: 16
+                color: "#eee"
             }
         }
 
@@ -30,11 +32,13 @@ Rectangle {
                 anchors.top: parent.top
                 height: 28
 
-                color: "#888"
+                color: "#777"
 
                 Text {
                     anchors.centerIn: parent
                     text: "Uniforms"
+                    font.pointSize: 16
+                    color: "#eee"
                 }
             }
 
@@ -47,15 +51,18 @@ Rectangle {
 
                 ListView {
                     model: ListModel {
-                        ListElement {}
+                        ListElement { name: "LightPosition"; componentCount: 3 }
+                        ListElement { name: "LightColor"; componentCount: 4 }
                     }
-                    delegate: Rectangle {
+                    delegate: Item {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.margins: 12
+                        height: 65
                         LabeledVectorInput {
-                            label: "LightPosition"
-                            numOfComponents: 3
+                            id: _vi
+                            label: name
+                            numOfComponents: componentCount
                         }
                     }
                 }
@@ -84,18 +91,27 @@ Rectangle {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.margins: 12
+
                         Text {
-                            text: name + " : " + type
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: name
+                        }
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.right: parent.right
+                            text: type
+                            color: "#326545"
                         }
                     }
 
                     section.property: "category"
                     section.delegate: Item {
-                        height: 24
+                        height: 28
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.margins: 12
                         Text {
+                            anchors.verticalCenter: parent.verticalCenter
                             text: section
                             font.bold: true
                             font.pointSize: 14

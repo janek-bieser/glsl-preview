@@ -21,7 +21,7 @@ Item {
 
     NumberInput {
         anchors.left: lbl.right
-        anchors.leftMargin: 6
+        anchors.leftMargin: 4
         anchors.right: parent.right
         id: numInput
     }

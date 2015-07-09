@@ -36,7 +36,7 @@ ApplicationWindow {
             MenuSeparator {}
             MenuItem {
                 text: qsTr("&Toggle Inspector")
-                onTriggered: (shaderInspector.width == 0) ? shaderInspector.width = 300 : shaderInspector.width = 0
+                onTriggered: (shaderInspector.width == 0) ? shaderInspector.width = 375 : shaderInspector.width = 0
                 shortcut: "Ctrl+i"
             }
         }
@@ -49,7 +49,7 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
 
-        width: 350
+        width: 375
     }
 
     OGLViewport {
@@ -63,6 +63,8 @@ ApplicationWindow {
         ShaderSelectionMenu {
             id: shaderMenu
             anchors.centerIn: parent
+
+            radius: 5
 
             onFilesSelected: {
                 console.log(sources.vertex, sources.fragment);
