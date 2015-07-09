@@ -5,5 +5,14 @@
         <file>OGLViewport.qml</file>
         <file>ShaderSelectionMenu.qml</file>
         <file>FileInput.qml</file>
+        <file>LabeledNumberInput.qml</file>
+        <file>LabeledVectorInput.qml</file>
+        <file>NumberField.qml</file>
+        <file>NumberInput.qml</file>
+        <file>TriangleIcon.qml</file>
+        <file>VectorInput.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file alias="triangle.svg">images/triangle.svg</file>
     </qresource>
 </RCC>

@@ -49,7 +49,7 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
 
-        width: 300
+        width: 350
     }
 
     OGLViewport {
