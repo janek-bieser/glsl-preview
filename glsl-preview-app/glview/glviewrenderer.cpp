@@ -45,6 +45,34 @@ void GLViewRenderer::updateUniform(const QVariantMap& uniform)
     qDebug() << "update uniform" << uniform.value("name");
 }
 
+void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
+{
+    qDebug() << "Loading Shader(" << vertex << "," << fragment << ")";
+    QOpenGLShader vertexShader(QOpenGLShader::Vertex);
+    vertexShader.compileSourceFile(vertex);
+    QString vLog = vertexShader.log();
+    if (vLog.size() > 0) {
+        qDebug() << vLog;
+    }
+
+    QOpenGLShader fragmentShader(QOpenGLShader::Fragment);
+    fragmentShader.compileSourceFile(fragment);
+    QString fLog = fragmentShader.log();
+    if (fLog.size() > 0) {
+        qDebug() << fLog;
+    }
+
+    m_program = new QOpenGLShaderProgram();
+    m_program->addShader(&vertexShader);
+    m_program->addShader(&fragmentShader);
+    m_program->link();
+
+    QString progLog = m_program->log();
+    if (progLog.size() > 0) {
+        qDebug() << progLog;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Private
 // -----------------------------------------------------------------------------
@@ -65,29 +93,7 @@ void GLViewRenderer::setupGL()
     QString vertex_source = "/Users/janekbieser/Desktop/shader_test/shader.vs";
     QString fragment_source = "/Users/janekbieser/Desktop/shader_test/shader.fs";
 
-    QOpenGLShader vertexShader(QOpenGLShader::Vertex);
-    vertexShader.compileSourceFile(vertex_source);
-    QString vLog = vertexShader.log();
-    if (vLog.size() > 0) {
-        qDebug() << vLog;
-    }
-
-    QOpenGLShader fragmentShader(QOpenGLShader::Fragment);
-    fragmentShader.compileSourceFile(fragment_source);
-    QString fLog = fragmentShader.log();
-    if (fLog.size() > 0) {
-        qDebug() << fLog;
-    }
-
-    m_program = new QOpenGLShaderProgram();
-    m_program->addShader(&vertexShader);
-    m_program->addShader(&fragmentShader);
-    m_program->link();
-
-    QString progLog = m_program->log();
-    if (progLog.size() > 0) {
-        qDebug() << progLog;
-    }
+    loadShader(vertex_source, fragment_source);
 }
 
 

@@ -21,6 +21,7 @@ public:
 
 public slots:
     void updateUniform(const QVariantMap& uniform);
+    void loadShader(const QString& vertex, const QString& fragment);
 
 signals:
     void glVersionChanged(const QString& version);
