@@ -2,7 +2,14 @@ TEMPLATE = app
 
 QT += qml quick widgets
 
-SOURCES += main.cpp
+CONFIG += c++11
+
+TARGET = "GLSL Preview"
+
+SOURCES += main.cpp \
+    glview/glviewport.cpp \
+    glview/glviewrenderer.cpp \
+    glview/glviewmessagebus.cpp
 
 RESOURCES += qml.qrc
 
@@ -11,3 +18,8 @@ QML_IMPORT_PATH =
 
 # Default rules for deployment.
 include(deployment.pri)
+
+HEADERS += \
+    glview/glviewport.h \
+    glview/glviewrenderer.h \
+    glview/glviewmessagebus.h

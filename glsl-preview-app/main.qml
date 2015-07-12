@@ -11,7 +11,8 @@ ApplicationWindow {
     title: qsTr("GLSL Preview")
     width: 900
     height: 600
-    visible: true
+
+    visible: false
 
     minimumWidth: 850
     minimumHeight: 500
@@ -60,16 +61,16 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        ShaderSelectionMenu {
-            id: shaderMenu
-            anchors.centerIn: glViewport
+        //ShaderSelectionMenu {
+        //    id: shaderMenu
+        //    anchors.centerIn: glViewport
 
-            radius: 5
+        //    radius: 5
 
-            onFilesSelected: {
-                glViewport.loadShader(sources);
-            }
-        }
+        //    onFilesSelected: {
+        //        glViewport.loadShader(sources);
+        //    }
+        //}
     }
 
 }
