@@ -8,8 +8,7 @@ TARGET = "GLSL Preview"
 
 SOURCES += main.cpp \
     glview/glviewport.cpp \
-    glview/glviewrenderer.cpp \
-    glview/glviewmessagebus.cpp
+    glview/glviewrenderer.cpp
 
 RESOURCES += qml.qrc
 
@@ -21,5 +20,4 @@ include(deployment.pri)
 
 HEADERS += \
     glview/glviewport.h \
-    glview/glviewrenderer.h \
-    glview/glviewmessagebus.h
+    glview/glviewrenderer.h

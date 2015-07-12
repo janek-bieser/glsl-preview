@@ -5,7 +5,16 @@ import GLRendering 1.0
 
 Item {
     GLViewport {
+        id: viewport
         anchors.fill: parent
+    }
+
+    Text {
+        id: glVersionText
+        text: "OpenGL v" + viewport.glVersion
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.margins: 12
     }
 
     function loadShader(shaderFiles) {

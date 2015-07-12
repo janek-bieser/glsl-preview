@@ -3,16 +3,40 @@
 
 GLViewport::GLViewport(QQuickItem* parent) : QQuickFramebufferObject(parent)
 {
-    m_msgBus = new GLViewMessageBus();
 }
 
 GLViewport::~GLViewport()
 {
-    delete m_msgBus;
-    m_msgBus = NULL;
 }
 
 QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
 {
-    return new GLViewRenderer(m_msgBus);
+    GLViewRenderer *renderer = new GLViewRenderer();
+
+    connect(renderer, &GLViewRenderer::glVersionChanged, this, &GLViewport::changeGLVersion);
+    connect(this, &GLViewport::uniformChanged, renderer, &GLViewRenderer::updateUniform);
+
+    return renderer;
+}
+
+QString GLViewport::glVersion()
+{
+    return m_glVersion;
+}
+
+// -----------------------------------------------------------------------------
+// Slots
+// -----------------------------------------------------------------------------
+
+void GLViewport::changeGLVersion(const QString &version)
+{
+    if (m_glVersion != version) {
+        m_glVersion = version;
+        emit glVersionChanged();
+    }
+}
+
+void GLViewport::updateUniform(const QVariantMap& uniform)
+{
+    emit uniformChanged(uniform);
 }

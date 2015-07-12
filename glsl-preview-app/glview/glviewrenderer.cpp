@@ -1,10 +1,9 @@
 #include "glviewrenderer.h"
 
-GLViewRenderer::GLViewRenderer(GLViewMessageBus* msgBus) : QQuickFramebufferObject::Renderer()
+GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
 {
     m_program = NULL;
     m_initialized = false;
-    m_msgBus = msgBus;
 }
 
 GLViewRenderer::~GLViewRenderer()
@@ -32,6 +31,24 @@ void GLViewRenderer::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+QString GLViewRenderer::glVersion() const
+{
+    return m_glVersion;
+}
+
+// -----------------------------------------------------------------------------
+// Slots
+// -----------------------------------------------------------------------------
+
+void GLViewRenderer::updateUniform(const QVariantMap& uniform)
+{
+    qDebug() << "update uniform" << uniform.value("name");
+}
+
+// -----------------------------------------------------------------------------
+// Private
+// -----------------------------------------------------------------------------
+
 void GLViewRenderer::setupGL()
 {
     m_initialized = true;
@@ -42,7 +59,8 @@ void GLViewRenderer::setupGL()
     glGetIntegerv(GL_MINOR_VERSION, &glVersionMinor);
     QString glVersionString = QString::number(glVersionMajor) + "." + QString::number(glVersionMinor);
 
-    m_msgBus->setGlVersion(glVersionString);
+    m_glVersion = glVersionString;
+    emit glVersionChanged(m_glVersion);
 
     QString vertex_source = "/Users/janekbieser/Desktop/shader_test/shader.vs";
     QString fragment_source = "/Users/janekbieser/Desktop/shader_test/shader.fs";

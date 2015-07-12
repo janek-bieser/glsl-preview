@@ -6,21 +6,29 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 
-#include "glviewmessagebus.h"
-
-class GLViewRenderer : public QQuickFramebufferObject::Renderer
+class GLViewRenderer : public QObject, public QQuickFramebufferObject::Renderer
 {
+    Q_OBJECT
+    Q_PROPERTY(QString glVersion READ glVersion NOTIFY glVersionChanged)
 public:
-    GLViewRenderer(GLViewMessageBus* msgBus);
+    GLViewRenderer();
     ~GLViewRenderer();
 
     QOpenGLFramebufferObject* createFramebufferObject(const QSize &size) override;
     void render() override;
 
+    QString glVersion() const;
+
+public slots:
+    void updateUniform(const QVariantMap& uniform);
+
+signals:
+    void glVersionChanged(const QString& version);
+
 private:
     QOpenGLShaderProgram* m_program;
     bool m_initialized;
-    GLViewMessageBus* m_msgBus;
+    QString m_glVersion;
 
 private:
     void setupGL();

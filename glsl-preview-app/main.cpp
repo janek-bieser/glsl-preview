@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QQuickWindow* window = qobject_cast<QQuickWindow*>(engine.rootObjects().first());
-    qDebug() << window->title();
     window->setFormat(format);
 
     window->show();
