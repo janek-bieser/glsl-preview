@@ -8,7 +8,7 @@ TARGET = "GLSL Preview"
 
 SOURCES += main.cpp \
     glview/glviewport.cpp \
-    glview/glviewrenderer.cpp
+    glview/glviewrenderer.cpp \
 
 RESOURCES += qml.qrc
 
@@ -18,6 +18,8 @@ QML_IMPORT_PATH =
 # Default rules for deployment.
 include(deployment.pri)
 
+INCLUDEPATH += glm
+
 HEADERS += \
     glview/glviewport.h \
-    glview/glviewrenderer.h
+    glview/glviewrenderer.h \
