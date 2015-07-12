@@ -9,6 +9,7 @@ TARGET = "GLSL Preview"
 SOURCES += main.cpp \
     glview/glviewport.cpp \
     glview/glviewrenderer.cpp \
+    glview/renderables/quad.cpp
 
 RESOURCES += qml.qrc
 
@@ -23,3 +24,5 @@ INCLUDEPATH += glm
 HEADERS += \
     glview/glviewport.h \
     glview/glviewrenderer.h \
+    glview/renderables/renderable.h \
+    glview/renderables/quad.h

@@ -63,13 +63,21 @@ Item {
         }
     }
 
-    GLViewport {
-        id: viewport
-
+    Item {
         anchors.left: borderLeft.right
         anchors.right: parent.right
         anchors.top: viewportTools.bottom
         anchors.bottom: parent.bottom
+
+        transform: Scale {
+            yScale: -1
+            origin.y: viewport.height / 2
+        }
+
+        GLViewport {
+            id: viewport
+            anchors.fill: parent
+        }
     }
 
     ColorDialog {

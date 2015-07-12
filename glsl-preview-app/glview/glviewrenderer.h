@@ -6,6 +6,8 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 
+#include "renderables/renderable.h"
+
 class GLViewRenderer : public QObject, public QQuickFramebufferObject::Renderer
 {
     Q_OBJECT
@@ -33,6 +35,8 @@ private:
     bool m_initialized;
     QString m_glVersion;
     QColor m_backgroundColor;
+
+    Renderable* m_currentRenderable;
 
 private:
     void setupGL();

@@ -3,10 +3,13 @@
 #include <QColor>
 #include <QThread>
 
+#include "renderables/quad.h"
+
 GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
 {
     m_program = NULL;
     m_initialized = false;
+    m_currentRenderable = NULL;
 }
 
 GLViewRenderer::~GLViewRenderer()
@@ -32,6 +35,11 @@ void GLViewRenderer::render()
 
     glClearColor(m_backgroundColor.redF(), m_backgroundColor.greenF(), m_backgroundColor.blueF(), 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    if (m_currentRenderable) {
+        m_program->bind();
+        m_currentRenderable->render();
+    }
 }
 
 QString GLViewRenderer::glVersion() const
@@ -92,8 +100,6 @@ void GLViewRenderer::setupGL()
 {
     m_initialized = true;
 
-    //m_backgroundColor = QColor("#3287cf");
-
     GLint glVersionMajor;
     GLint glVersionMinor;
     glGetIntegerv(GL_MAJOR_VERSION, &glVersionMajor);
@@ -107,6 +113,8 @@ void GLViewRenderer::setupGL()
     QString fragment_source = "/Users/janekbieser/Desktop/shader_test/shader.fs";
 
     loadShader(vertex_source, fragment_source);
+
+    m_currentRenderable = new Quad(1, 1);
 }
 
 
