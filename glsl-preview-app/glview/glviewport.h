@@ -7,6 +7,7 @@ class GLViewport : public QQuickFramebufferObject
 {
     Q_OBJECT
     Q_PROPERTY(QString glVersion READ glVersion NOTIFY glVersionChanged)
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
 public:
     GLViewport(QQuickItem* parent = NULL);
     ~GLViewport();
@@ -15,6 +16,9 @@ public:
 
     QString glVersion();
 
+    QColor backgroundColor();
+    void setBackgroundColor(QColor color);
+
 public slots:
     void changeGLVersion(const QString& version);
     void updateUniform(const QVariantMap& uniform);
@@ -22,9 +26,11 @@ public slots:
 signals:
     void glVersionChanged() const;
     void uniformChanged(const QVariantMap& uniform) const;
+    void backgroundColorChanged(QColor color) const;
 
 private:
     QString m_glVersion;
+    QColor m_backgroundColor;
 };
 
 #endif // GLVIEWPORT_H

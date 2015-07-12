@@ -1,5 +1,8 @@
 #include "glviewrenderer.h"
 
+#include <QColor>
+#include <QThread>
+
 GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
 {
     m_program = NULL;
@@ -27,13 +30,21 @@ void GLViewRenderer::render()
         this->setupGL();
     }
 
-    glClearColor(0.32, 0.65, 0.82, 1);
+    glClearColor(m_backgroundColor.redF(), m_backgroundColor.greenF(), m_backgroundColor.blueF(), 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 QString GLViewRenderer::glVersion() const
 {
     return m_glVersion;
+}
+
+void GLViewRenderer::setBackgroundColor(QColor color)
+{
+    if (m_backgroundColor != color) {
+        m_backgroundColor = color;
+        update();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +91,8 @@ void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
 void GLViewRenderer::setupGL()
 {
     m_initialized = true;
+
+    //m_backgroundColor = QColor("#3287cf");
 
     GLint glVersionMajor;
     GLint glVersionMinor;

@@ -1,6 +1,8 @@
 #include "glviewport.h"
 #include "glviewrenderer.h"
 
+#include <QThread>
+
 GLViewport::GLViewport(QQuickItem* parent) : QQuickFramebufferObject(parent)
 {
 }
@@ -15,6 +17,7 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
 
     connect(renderer, &GLViewRenderer::glVersionChanged, this, &GLViewport::changeGLVersion);
     connect(this, &GLViewport::uniformChanged, renderer, &GLViewRenderer::updateUniform);
+    connect(this, &GLViewport::backgroundColorChanged, renderer, &GLViewRenderer::setBackgroundColor);
 
     return renderer;
 }
@@ -22,6 +25,20 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
 QString GLViewport::glVersion()
 {
     return m_glVersion;
+}
+
+QColor GLViewport::backgroundColor()
+{
+    return m_backgroundColor;
+}
+
+void GLViewport::setBackgroundColor(QColor color)
+{
+    if (m_backgroundColor != color) {
+        m_backgroundColor = color;
+        emit backgroundColorChanged(m_backgroundColor);
+        update();
+    }
 }
 
 // -----------------------------------------------------------------------------

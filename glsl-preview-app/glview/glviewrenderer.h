@@ -20,16 +20,19 @@ public:
     QString glVersion() const;
 
 public slots:
+    void setBackgroundColor(QColor color);
     void updateUniform(const QVariantMap& uniform);
     void loadShader(const QString& vertex, const QString& fragment);
 
 signals:
     void glVersionChanged(const QString& version);
+    void backgroundColorChanged(QColor color);
 
 private:
     QOpenGLShaderProgram* m_program;
     bool m_initialized;
     QString m_glVersion;
+    QColor m_backgroundColor;
 
 private:
     void setupGL();
