@@ -87,8 +87,8 @@ Rectangle {
 
                 ListView {
                     model: ListModel {
-                        ListElement { name: "slp_Vertex"; type: "vec3"; category: "Attributes" }
-                        ListElement { name: "slp_Normal"; type: "vec3"; category: "Attributes" }
+                        ListElement { name: "slp_Vertex (location=0)"; type: "vec3"; category: "Attributes" }
+                        ListElement { name: "slp_Normal (location=1)"; type: "vec3"; category: "Attributes" }
 
                         ListElement { name: "slp_ModelMatrix"; type: "mat4"; category: "Uniforms" }
                         ListElement { name: "slp_ViewMatrix"; type: "mat4"; category: "Uniforms" }
