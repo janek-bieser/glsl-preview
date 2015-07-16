@@ -5,6 +5,7 @@
 
 GLViewport::GLViewport(QQuickItem* parent) : QQuickFramebufferObject(parent)
 {
+    setAcceptedMouseButtons(Qt::AllButtons);
 }
 
 GLViewport::~GLViewport()
@@ -38,6 +39,18 @@ void GLViewport::setBackgroundColor(QColor color)
         m_backgroundColor = color;
         emit backgroundColorChanged(m_backgroundColor);
         update();
+    }
+}
+
+void GLViewport::mousePressEvent(QMouseEvent* event)
+{
+    qDebug() << event->localPos();
+}
+
+void GLViewport::mouseMoveEvent(QMouseEvent* event)
+{
+    if ( (event->buttons() & Qt::LeftButton) > 0) {
+        qDebug() << event->localPos();
     }
 }
 

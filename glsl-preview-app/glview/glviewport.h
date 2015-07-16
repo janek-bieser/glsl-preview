@@ -19,6 +19,9 @@ public:
     QColor backgroundColor();
     void setBackgroundColor(QColor color);
 
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+
 public slots:
     void changeGLVersion(const QString& version);
     void updateUniform(const QVariantMap& uniform);

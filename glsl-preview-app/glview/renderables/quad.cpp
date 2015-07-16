@@ -14,11 +14,14 @@ void Quad::render()
 
 void Quad::setupBuffers()
 {
+    GLfloat hw = m_width / 2;
+    GLfloat hh = m_height / 2;
+
     GLfloat vertices[] = {
-        0, 0, 0,
-        m_width, 0, 0,
-        m_width, m_height, 0,
-        0, m_height, 0
+        -hw, -hh, 0,
+        hw, -hh, 0,
+        hw, hh, 0,
+        -hw, hh, 0
     };
 
     glGenVertexArrays(1, &m_vertexArray);

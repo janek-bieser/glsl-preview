@@ -39,6 +39,7 @@ void GLViewRenderer::render()
     glClearColor(m_backgroundColor.redF(), m_backgroundColor.greenF(), m_backgroundColor.blueF(), 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
     if (m_currentRenderable) {
         m_program->bind();
 
@@ -51,7 +52,8 @@ void GLViewRenderer::render()
         glm::vec3 up(0, 1, 0);
         glm::mat4 viewMat = glm::lookAt(pos, pos + forward, up);
 
-        glm::mat4 projMat = glm::perspective(45.0f, 525.0f / 565.0f, 0.1f, -1000.0f);
+        QSize fbSize = this->framebufferObject()->size();
+        glm::mat4 projMat = glm::perspective(45.0f, (GLfloat) fbSize.width() / fbSize.height(), 0.1f, -1000.0f);
 
         glm::mat4 MVP = projMat * viewMat * modelMat;
 
