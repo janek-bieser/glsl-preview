@@ -3,6 +3,9 @@
 #include <QColor>
 #include <QThread>
 
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+
 #include "renderables/quad.h"
 
 GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
@@ -38,6 +41,41 @@ void GLViewRenderer::render()
 
     if (m_currentRenderable) {
         m_program->bind();
+
+        GLuint progId = m_program->programId();
+
+        glm::mat4 modelMat = glm::translate(glm::vec3(0, 0, 0));
+
+        glm::vec3 pos(0, 0, 1);
+        glm::vec3 forward(0, 0, -1);
+        glm::vec3 up(0, 1, 0);
+        glm::mat4 viewMat = glm::lookAt(pos, pos + forward, up);
+
+        glm::mat4 projMat = glm::perspective(45.0f, 525.0f / 565.0f, 0.1f, -1000.0f);
+
+        glm::mat4 MVP = projMat * viewMat * modelMat;
+
+        GLint modelMatLoc = glGetUniformLocation(progId, "slp_ModelMatrix");
+        if (modelMatLoc >= 0) {
+            glUniformMatrix4fv(modelMatLoc, 1, GL_FALSE, &modelMat[0][0]);
+        }
+
+        GLint viewMatLoc = glGetUniformLocation(progId, "slp_ViewMatrix");
+        if (viewMatLoc >= 0) {
+            glUniformMatrix4fv(viewMatLoc, 1, GL_FALSE, &viewMat[0][0]);
+        }
+
+        GLint projMatLoc = glGetUniformLocation(progId, "slp_ProjectionMatrix");
+        qDebug() << projMatLoc;
+        if (projMatLoc >= 0) {
+            glUniformMatrix4fv(projMatLoc, 1, GL_FALSE, &projMat[0][0]);
+        }
+
+        GLint mvpMatrixLoc = glGetUniformLocation(progId, "slp_MVPMatrix");
+        if (mvpMatrixLoc >= 0) {
+            glUniformMatrix4fv(mvpMatrixLoc, 1, GL_FALSE, &MVP[0][0]);
+        }
+
         m_currentRenderable->render();
     }
 }
@@ -114,7 +152,7 @@ void GLViewRenderer::setupGL()
 
     loadShader(vertex_source, fragment_source);
 
-    m_currentRenderable = new Quad(1, 1);
+    m_currentRenderable = new Quad(.5, .5);
 }
 
 
