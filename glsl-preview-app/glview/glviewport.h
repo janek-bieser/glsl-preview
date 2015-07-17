@@ -31,9 +31,12 @@ signals:
     void uniformChanged(const QVariantMap& uniform) const;
     void backgroundColorChanged(QColor color) const;
 
+    void mouseMoved(const QPointF& point) const;
+
 private:
     QString m_glVersion;
     QColor m_backgroundColor;
+    QPointF m_lastMousePos;
 };
 
 #endif // GLVIEWPORT_H

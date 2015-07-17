@@ -20,6 +20,8 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
     connect(this, &GLViewport::uniformChanged, renderer, &GLViewRenderer::updateUniform);
     connect(this, &GLViewport::backgroundColorChanged, renderer, &GLViewRenderer::setBackgroundColor);
 
+    connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
+
     return renderer;
 }
 
@@ -44,13 +46,18 @@ void GLViewport::setBackgroundColor(QColor color)
 
 void GLViewport::mousePressEvent(QMouseEvent* event)
 {
-    qDebug() << event->localPos();
+    m_lastMousePos = event->localPos();
 }
 
 void GLViewport::mouseMoveEvent(QMouseEvent* event)
 {
     if ( (event->buttons() & Qt::LeftButton) > 0) {
-        qDebug() << event->localPos();
+        QPointF currentPos = event->localPos();
+        QPointF offset = currentPos - m_lastMousePos;
+        m_lastMousePos = currentPos;
+
+        emit mouseMoved(offset);
+        update();
     }
 }
 

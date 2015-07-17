@@ -26,6 +26,8 @@ public slots:
     void updateUniform(const QVariantMap& uniform);
     void loadShader(const QString& vertex, const QString& fragment);
 
+    void rotate(QPointF rotation);
+
 signals:
     void glVersionChanged(const QString& version);
     void backgroundColorChanged(QColor color);
@@ -37,6 +39,8 @@ private:
     QColor m_backgroundColor;
 
     Renderable* m_currentRenderable;
+
+    QPointF m_objectRotation;
 
 private:
     void setupGL();

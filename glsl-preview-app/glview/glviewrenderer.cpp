@@ -5,6 +5,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include "renderables/quad.h"
 
@@ -47,6 +48,12 @@ void GLViewRenderer::render()
 
         glm::mat4 modelMat = glm::translate(glm::vec3(0, 0, 0));
 
+        float rx = m_objectRotation.x();
+        float ry = m_objectRotation.y();
+
+        modelMat = glm::rotate(modelMat, rx * 2, glm::vec3(0, 1, 0));
+        modelMat = glm::rotate(modelMat, -ry * 2, glm::vec3(1, 0, 0));
+
         glm::vec3 pos(0, 0, 1);
         glm::vec3 forward(0, 0, -1);
         glm::vec3 up(0, 1, 0);
@@ -68,7 +75,6 @@ void GLViewRenderer::render()
         }
 
         GLint projMatLoc = glGetUniformLocation(progId, "slp_ProjectionMatrix");
-        qDebug() << projMatLoc;
         if (projMatLoc >= 0) {
             glUniformMatrix4fv(projMatLoc, 1, GL_FALSE, &projMat[0][0]);
         }
@@ -130,6 +136,11 @@ void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
     if (progLog.size() > 0) {
         qDebug() << progLog;
     }
+}
+
+void GLViewRenderer::rotate(QPointF rotation)
+{
+    m_objectRotation += (rotation * 0.002);
 }
 
 // -----------------------------------------------------------------------------
