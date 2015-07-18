@@ -3,7 +3,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
 Rectangle {
-    color: "#dedede"
+    color: "#e3e3e3"
 
     SplitView {
 
@@ -12,7 +12,7 @@ Rectangle {
 
         handleDelegate: Rectangle {
             height: 28
-            color: "#777"
+            color: "#d5d5d5"
 
             border.width: 1
             anchors.margins: -1
@@ -23,7 +23,6 @@ Rectangle {
                 anchors.centerIn: parent
                 text: "Builtins"
                 font.pointSize: 16
-                color: "#f3f3f3"
             }
         }
 
@@ -42,13 +41,12 @@ Rectangle {
                 border.width: 1
                 anchors.margins: -1
 
-                color: "#777"
+                color: "#d5d5d5"
 
                 Text {
                     anchors.centerIn: parent
                     text: "Uniforms"
                     font.pointSize: 16
-                    color: "#f3f3f3"
                 }
             }
 
@@ -62,19 +60,29 @@ Rectangle {
             Component {
                 id: vecComponent
 
-                Item {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.margins: 12
+                Rectangle {
                     height: 80
+                    width: propView.width
+                    color: "#f3f3f3"
 
                     LabeledVectorInput {
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.margins: 12
                         label: modelData.name
                         numOfComponents: modelData.componentCount
                         onValueChanged: {
                             // update vec uniform
                         }
+                    }
+
+                    Rectangle {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        height: 1
+                        color: "#999"
                     }
                 }
             }
@@ -82,18 +90,28 @@ Rectangle {
             Component {
                 id: colorComponent
 
-                Item {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.margins: 12
-                    height: 106
+                Rectangle {
+                    color: "#f3f3f3"
+                    height: 112
+                    width: propView.width
 
                     ColorInput {
                         label: modelData.name
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.margins: 12
                         onColorChanged: {
                             // update color uniform
                         }
+                    }
+
+                    Rectangle {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        height: 1
+                        color: "#999"
                     }
                 }
             }
@@ -113,6 +131,7 @@ Rectangle {
             }
 
             ScrollView {
+                id: propView
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom

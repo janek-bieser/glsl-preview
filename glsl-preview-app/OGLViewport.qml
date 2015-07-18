@@ -29,6 +29,8 @@ Item {
 
         height: 36
 
+        color: "#f3f3f3"
+
         Text {
             text: "OpenGL v" + viewport.glVersion
             anchors.left: parent.left

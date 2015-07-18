@@ -21,7 +21,7 @@ ColumnLayout {
     Label {
         id: lbl
         text: "Vector"
-        font.bold: true
+        //font.bold: true
     }
 
     VectorInput {
