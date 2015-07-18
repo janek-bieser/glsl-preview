@@ -19,6 +19,14 @@ ApplicationWindow {
 
     menuBar: MenuBar {
         Menu {
+            title: "&GLSL Preview"
+            MenuItem {
+                text: "&About GLSL Preview"
+                onTriggered: console.log("Show About")
+            }
+        }
+
+        Menu {
             title: qsTr("&Program")
             MenuItem {
                 text: "&Build Program"
@@ -39,6 +47,16 @@ ApplicationWindow {
                 text: qsTr("&Toggle Inspector")
                 onTriggered: (shaderInspector.width == 0) ? shaderInspector.width = 375 : shaderInspector.width = 0
                 shortcut: "Ctrl+i"
+            }
+        }
+
+        Menu {
+            title: qsTr("&Help")
+            MenuItem {
+                text: qsTr("&User Manual")
+            }
+            MenuItem {
+                text: qsTr("&Contact Support...")
             }
         }
     }
