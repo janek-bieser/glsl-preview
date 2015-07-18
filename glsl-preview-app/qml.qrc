@@ -11,8 +11,11 @@
         <file>NumberInput.qml</file>
         <file>TriangleIcon.qml</file>
         <file>VectorInput.qml</file>
+        <file>ColorInput.qml</file>
+        <file>ColorPicker.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="triangle.svg">images/triangle.svg</file>
+        <file alias="checker_bg.svg">images/checker_bg.svg</file>
     </qresource>
 </RCC>

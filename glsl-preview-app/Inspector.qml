@@ -52,6 +52,66 @@ Rectangle {
                 }
             }
 
+            ListModel {
+                id: propsModel
+                ListElement { name: "LightPosition"; componentCount: 3; type: "vec" }
+                ListElement { name: "LightColor"; componentCount: 4; type: "color" }
+                ListElement { name: "LightColor"; componentCount: 4; type: "color" }
+            }
+
+            Component {
+                id: vecComponent
+
+                Item {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.margins: 12
+                    height: 80
+
+                    LabeledVectorInput {
+                        anchors.verticalCenter: parent.verticalCenter
+                        label: modelData.name
+                        numOfComponents: modelData.componentCount
+                        onValueChanged: {
+                            // update vec uniform
+                        }
+                    }
+                }
+            }
+
+            Component {
+                id: colorComponent
+
+                Item {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.margins: 12
+                    height: 106
+
+                    ColorInput {
+                        label: modelData.name
+                        anchors.verticalCenter: parent.verticalCenter
+                        onColorChanged: {
+                            // update color uniform
+                        }
+                    }
+                }
+            }
+
+            Component {
+                id: inspectorDelegate
+                Loader {
+                    property variant modelData: propsModel.get(index);
+                    sourceComponent: {
+                        if (type == "vec") {
+                            return vecComponent;
+                        } else if (type == "color") {
+                            return colorComponent;
+                        }
+                    }
+                }
+            }
+
             ScrollView {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -59,22 +119,8 @@ Rectangle {
                 anchors.top: uniformsHeader.bottom
 
                 ListView {
-                    model: ListModel {
-                        ListElement { name: "LightPosition"; componentCount: 3 }
-                        ListElement { name: "LightColor"; componentCount: 4 }
-                    }
-                    delegate: Item {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.margins: 12
-                        height: 65
-                        LabeledVectorInput {
-                            id: _vi
-                            anchors.verticalCenter: parent.verticalCenter
-                            label: name
-                            numOfComponents: componentCount
-                        }
-                    }
+                    model: propsModel
+                    delegate: inspectorDelegate
                 }
             }
         }
@@ -93,6 +139,8 @@ Rectangle {
                         ListElement { name: "slp_ModelMatrix"; type: "mat4"; category: "Uniforms" }
                         ListElement { name: "slp_ViewMatrix"; type: "mat4"; category: "Uniforms" }
                         ListElement { name: "slp_ProjectionMatrix"; type: "mat4"; category: "Uniforms" }
+                        ListElement { name: "slp_MVPMatrix"; type: "mat4"; category: "Uniforms" }
+
                         ListElement { name: "slp_NormalMatrix"; type: "mat4"; category: "Uniforms" }
                     }
 

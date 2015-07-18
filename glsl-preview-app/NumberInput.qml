@@ -77,7 +77,8 @@ Item {
             tmp = minValue;
         }
 
-        _numberField.text = tmp.toFixed(3).toString();
+        //_numberField.text = tmp.toFixed(3).toString();
+        _numberField.value = tmp;
     }
 }
 
