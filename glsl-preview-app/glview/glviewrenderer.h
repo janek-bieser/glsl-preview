@@ -7,6 +7,7 @@
 #include <QOpenGLShaderProgram>
 
 #include "shaderuniform.h"
+#include "vecuniformcache.h"
 
 #include "renderables/renderable.h"
 
@@ -41,10 +42,10 @@ private:
     bool m_initialized;
     QString m_glVersion;
     QColor m_backgroundColor;
-
     Renderable* m_currentRenderable;
-
     QPointF m_objectRotation;
+
+    QMap<QString, UniformCache*> m_uniformCache;
 
 private:
     void setupGL();

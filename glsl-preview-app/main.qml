@@ -71,6 +71,10 @@ ApplicationWindow {
         width: 375
 
         uniformModel: glViewport.uniformModel
+
+        onUniformChanged: {
+            glViewport.updateUniform(uniform);
+        }
     }
 
     OGLViewport {

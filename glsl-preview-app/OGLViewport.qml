@@ -95,5 +95,9 @@ Item {
     function loadShader(shaderFiles) {
         console.log("loading: " + shaderFiles.vertex + ", " + shaderFiles.fragment);
     }
+
+    function updateUniform(uniform) {
+        viewport.updateUniform(uniform);
+    }
 }
 

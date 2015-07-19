@@ -84,6 +84,11 @@ void GLViewRenderer::render()
             glUniformMatrix4fv(mvpMatrixLoc, 1, GL_FALSE, &MVP[0][0]);
         }
 
+        for (auto it = m_uniformCache.begin(); it != m_uniformCache.end(); it++) {
+            UniformCache* uc = it.value();
+            uc->setUniform();
+        }
+
         m_currentRenderable->render();
     }
 }
@@ -107,7 +112,31 @@ void GLViewRenderer::setBackgroundColor(QColor color)
 
 void GLViewRenderer::updateUniform(const QVariantMap& uniform)
 {
-    qDebug() << "update uniform" << uniform.value("name");
+    QString name = uniform.value("name").toString();
+    QString type = uniform.value("type").toString();
+    QList<QVariant> values = uniform.value("values").toList();
+    int valuesLen = values.length();
+
+    if (!m_uniformCache.contains(name)) {
+        GLuint progId = m_program->programId();
+        GLint loc = glGetUniformLocation(progId, name.toStdString().c_str());
+        if (loc >= 0) {
+            VecUniformCache* tmp = new VecUniformCache(loc, valuesLen);
+            m_uniformCache[name] = tmp;
+        } else {
+            qWarning() << "trying to update non existing uniform";
+        }
+    }
+
+    if (type.contains("vec")) {
+        GLfloat floatValues[valuesLen];
+        for (int i = 0; i < valuesLen; i++) {
+            floatValues[i] = values[i].toFloat();
+        }
+        VecUniformCache* uc = (VecUniformCache*) m_uniformCache[name];
+        uc->setValues(floatValues);
+        update();
+    }
 }
 
 void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)

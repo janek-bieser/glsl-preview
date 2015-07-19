@@ -5,6 +5,10 @@ import QtQuick.Layouts 1.1
 Rectangle {
     property alias uniformModel: uniformList.model
 
+    signal uniformChanged(var uniform)
+
+    id: root
+
     color: "#e3e3e3"
 
     SplitView {
@@ -79,7 +83,8 @@ Rectangle {
                         }
 
                         onValueChanged: {
-
+                            var c = getComponents();
+                            root.uniformChanged({name: modelData.name, values: c, type: modelData.type});
                         }
                     }
 
@@ -127,7 +132,6 @@ Rectangle {
                 Loader {
                     property variant modelData: uniformList.model.get(index)
                     sourceComponent: {
-                        console.log(type)
                         if (/^vec(2|3|4)$/.test(type)) {
                             return vecComponent;
                         } else if (type == "color") {
