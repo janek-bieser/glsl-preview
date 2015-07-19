@@ -22,6 +22,8 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
 
     connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
 
+    connect(renderer, &GLViewRenderer::uniformFound, this, &GLViewport::addUniform);
+
     return renderer;
 }
 
@@ -42,6 +44,11 @@ void GLViewport::setBackgroundColor(QColor color)
         emit backgroundColorChanged(m_backgroundColor);
         update();
     }
+}
+
+ShaderUniformList* GLViewport::uniformModel()
+{
+    return &m_uniformList;
 }
 
 void GLViewport::mousePressEvent(QMouseEvent* event)
@@ -77,3 +84,30 @@ void GLViewport::updateUniform(const QVariantMap& uniform)
 {
     emit uniformChanged(uniform);
 }
+
+void GLViewport::addUniform(const ShaderUniform& uniform)
+{
+    qDebug() << uniform.name() << uniform.type();
+    m_uniformList.add(uniform);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

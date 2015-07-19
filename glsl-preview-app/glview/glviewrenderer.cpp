@@ -165,7 +165,64 @@ void GLViewRenderer::setupGL()
 
     loadShader(vertex_source, fragment_source);
 
+    parseUniforms();
+
     m_currentRenderable = new Quad(.5, .5);
+}
+
+typedef QHash<GLenum, QString> ShaderTypesHash;
+
+ShaderTypesHash InitShaderTypes()
+{
+    ShaderTypesHash hash;
+
+    hash[GL_FLOAT] = "float";
+
+    hash[GL_FLOAT_VEC2] = "vec2";
+    hash[GL_FLOAT_VEC3] = "vec3";
+    hash[GL_FLOAT_VEC4] = "vec4";
+
+    hash[GL_FLOAT_MAT2] = "mat2";
+    hash[GL_FLOAT_MAT3] = "mat3";
+    hash[GL_FLOAT_MAT4] = "mat4";
+
+    hash[GL_SAMPLER_2D] = "sampler2D";
+
+    return hash;
+}
+
+const ShaderTypesHash ShaderTypes = InitShaderTypes();
+
+QString stringType(GLenum type)
+{
+    if (ShaderTypes.contains(type)) {
+        return ShaderTypes[type];
+    }
+    return "UNKNOWN_TYPE";
+}
+
+void GLViewRenderer::parseUniforms()
+{
+    GLuint progId = m_program->programId();
+    GLint numActiveUniforms;
+    glGetProgramiv(progId, GL_ACTIVE_UNIFORMS, &numActiveUniforms);
+
+    for (int i = 0; i < numActiveUniforms; i++) {
+        GLint size;
+        GLenum type;
+        GLsizei len;
+        GLchar name[30];
+        glGetActiveUniform(progId, i, 30, &len, &size, &type, name);
+
+        QString uniformName = QString::fromUtf8(name);
+        QString uniformType = stringType(type);
+
+        ShaderUniform uniform;
+        uniform.setName(uniformName);
+        uniform.setType(uniformType);
+
+        emit uniformFound(uniform);
+    }
 }
 
 

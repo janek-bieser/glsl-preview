@@ -69,6 +69,8 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
 
         width: 375
+
+        uniformModel: glViewport.uniformModel
     }
 
     OGLViewport {

@@ -6,6 +6,8 @@ import GLRendering 1.0
 
 Item {
 
+    property alias uniformModel: viewport.uniformModel
+
     Rectangle {
         id: borderLeft
         anchors.left: parent.left

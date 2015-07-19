@@ -6,6 +6,8 @@
 #include <QOpenGLShader>
 #include <QOpenGLShaderProgram>
 
+#include "shaderuniform.h"
+
 #include "renderables/renderable.h"
 
 class GLViewRenderer : public QObject, public QQuickFramebufferObject::Renderer
@@ -32,6 +34,8 @@ signals:
     void glVersionChanged(const QString& version);
     void backgroundColorChanged(QColor color);
 
+    void uniformFound(const ShaderUniform& uniform);
+
 private:
     QOpenGLShaderProgram* m_program;
     bool m_initialized;
@@ -44,10 +48,7 @@ private:
 
 private:
     void setupGL();
-};
-
-class GLViewRendererBus : public QObject
-{
+    void parseUniforms();
 };
 
 #endif // GLVIEWRENDERER_H

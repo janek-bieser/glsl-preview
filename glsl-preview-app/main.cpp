@@ -9,7 +9,10 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    qRegisterMetaType<ShaderUniform>("ShaderUniform");
+
     qmlRegisterType<GLViewport>("GLRendering", 1, 0, "GLViewport");
+    qmlRegisterType<ShaderUniform>("GLRendering", 1, 0, "ShaderUniform");
 
     QSurfaceFormat format;
     format.setVersion(3, 2);

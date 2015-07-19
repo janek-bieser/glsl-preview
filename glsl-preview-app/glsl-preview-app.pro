@@ -9,7 +9,9 @@ TARGET = "GLSL Preview"
 SOURCES += main.cpp \
     glview/glviewport.cpp \
     glview/glviewrenderer.cpp \
-    glview/renderables/quad.cpp
+    glview/renderables/quad.cpp \
+    glview/shaderuniformlist.cpp \
+    glview/shaderuniform.cpp
 
 RESOURCES += qml.qrc
 
@@ -25,4 +27,6 @@ HEADERS += \
     glview/glviewport.h \
     glview/glviewrenderer.h \
     glview/renderables/renderable.h \
-    glview/renderables/quad.h
+    glview/renderables/quad.h \
+    glview/shaderuniformlist.h \
+    glview/shaderuniform.h

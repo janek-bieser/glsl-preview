@@ -3,6 +3,8 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
 Rectangle {
+    property alias uniformModel: uniformList.model
+
     color: "#e3e3e3"
 
     SplitView {
@@ -71,9 +73,13 @@ Rectangle {
                         anchors.right: parent.right
                         anchors.margins: 12
                         label: modelData.name
-                        numOfComponents: modelData.componentCount
+                        numOfComponents: {
+                            var match = modelData.type.match(/^vec(2|3|4)$/);
+                            return match[1];
+                        }
+
                         onValueChanged: {
-                            // update vec uniform
+
                         }
                     }
 
@@ -119,9 +125,10 @@ Rectangle {
             Component {
                 id: inspectorDelegate
                 Loader {
-                    property variant modelData: propsModel.get(index);
+                    property variant modelData: uniformList.model.get(index)
                     sourceComponent: {
-                        if (type == "vec") {
+                        console.log(type)
+                        if (/^vec(2|3|4)$/.test(type)) {
                             return vecComponent;
                         } else if (type == "color") {
                             return colorComponent;
@@ -138,7 +145,8 @@ Rectangle {
                 anchors.top: uniformsHeader.bottom
 
                 ListView {
-                    model: propsModel
+                    id: uniformList
+                    //model: propsModel
                     delegate: inspectorDelegate
                 }
             }
