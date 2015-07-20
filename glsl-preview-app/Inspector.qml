@@ -113,7 +113,8 @@ Rectangle {
                         anchors.right: parent.right
                         anchors.margins: 12
                         onColorChanged: {
-                            // update color uniform
+                            var c = getComponents();
+                            root.uniformChanged({name: modelData.name, values: c, type: "vec4"});
                         }
                     }
 
@@ -132,10 +133,14 @@ Rectangle {
                 Loader {
                     property variant modelData: uniformList.model.get(index)
                     sourceComponent: {
-                        if (/^vec(2|3|4)$/.test(type)) {
+                        if (/^vec(2|3)$/.test(type)) {
                             return vecComponent;
-                        } else if (type == "color") {
-                            return colorComponent;
+                        } else if (/^vec4$/.test(type)) {
+                            if (name.match(/color/i)) {
+                                return colorComponent;
+                            } else {
+                                return vecComponent;
+                            }
                         }
                     }
                 }

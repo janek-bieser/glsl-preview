@@ -38,7 +38,7 @@ QVariant ShaderUniformList::data(const QModelIndex &index, int role) const
     if (role == TypeRole) {
         return m_uniforms[index.row()]->type();
     } else if (role == NameRole) {
-        return m_uniforms[index.row()]->type();
+        return m_uniforms[index.row()]->name();
     }
 
     return QVariant();

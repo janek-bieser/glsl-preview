@@ -35,5 +35,9 @@ ColumnLayout {
         }
     }
 
+    function getComponents() {
+        return vecInput.getComponents();
+    }
+
 }
 
