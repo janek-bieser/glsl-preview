@@ -38,8 +38,8 @@ void GLViewRenderer::render()
     }
 
     glClearColor(m_backgroundColor.redF(), m_backgroundColor.greenF(), m_backgroundColor.blueF(), 1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     if (m_currentRenderable) {
         m_program->bind();
@@ -89,6 +89,8 @@ void GLViewRenderer::render()
             uc->setUniform();
         }
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         m_currentRenderable->render();
     }
 }
