@@ -31,6 +31,22 @@ QOpenGLFramebufferObject* GLViewRenderer::createFramebufferObject(const QSize &s
     return new QOpenGLFramebufferObject(size, format);
 }
 
+void setUniformMatrix4f(GLuint progId, const char* name, const glm::mat4& value)
+{
+    GLint matLoc = glGetUniformLocation(progId, name);
+    if (matLoc >= 0) {
+        glUniformMatrix4fv(matLoc, 1, GL_FALSE, &value[0][0]);
+    }
+}
+
+void setUniformMatrix3f(GLuint progId, const char* name, const glm::mat3& value)
+{
+    GLint matLoc = glGetUniformLocation(progId, name);
+    if (matLoc >= 0) {
+        glUniformMatrix3fv(matLoc, 1, GL_FALSE, &value[0][0]);
+    }
+}
+
 void GLViewRenderer::render()
 {
     if (!m_initialized) {
@@ -54,6 +70,8 @@ void GLViewRenderer::render()
         modelMat = glm::rotate(modelMat, rx * 2, glm::vec3(0, 1, 0));
         modelMat = glm::rotate(modelMat, -ry * 2, glm::vec3(1, 0, 0));
 
+        glm::mat3 normalMat = glm::transpose(glm::inverse(glm::mat3(modelMat)));
+
         glm::vec3 pos(0, 0, 1);
         glm::vec3 forward(0, 0, -1);
         glm::vec3 up(0, 1, 0);
@@ -64,25 +82,12 @@ void GLViewRenderer::render()
 
         glm::mat4 MVP = projMat * viewMat * modelMat;
 
-        GLint modelMatLoc = glGetUniformLocation(progId, "slp_ModelMatrix");
-        if (modelMatLoc >= 0) {
-            glUniformMatrix4fv(modelMatLoc, 1, GL_FALSE, &modelMat[0][0]);
-        }
+        setUniformMatrix3f(progId, "slp_NormalMatrix", normalMat);
 
-        GLint viewMatLoc = glGetUniformLocation(progId, "slp_ViewMatrix");
-        if (viewMatLoc >= 0) {
-            glUniformMatrix4fv(viewMatLoc, 1, GL_FALSE, &viewMat[0][0]);
-        }
-
-        GLint projMatLoc = glGetUniformLocation(progId, "slp_ProjectionMatrix");
-        if (projMatLoc >= 0) {
-            glUniformMatrix4fv(projMatLoc, 1, GL_FALSE, &projMat[0][0]);
-        }
-
-        GLint mvpMatrixLoc = glGetUniformLocation(progId, "slp_MVPMatrix");
-        if (mvpMatrixLoc >= 0) {
-            glUniformMatrix4fv(mvpMatrixLoc, 1, GL_FALSE, &MVP[0][0]);
-        }
+        setUniformMatrix4f(progId, "slp_ModelMatrix", modelMat);
+        setUniformMatrix4f(progId, "slp_ViewMatrix", viewMat);
+        setUniformMatrix4f(progId, "slp_ProjectionMatrix", projMat);
+        setUniformMatrix4f(progId, "slp_MVPMatrix", MVP);
 
         for (auto it = m_uniformCache.begin(); it != m_uniformCache.end(); it++) {
             UniformCache* uc = it.value();
