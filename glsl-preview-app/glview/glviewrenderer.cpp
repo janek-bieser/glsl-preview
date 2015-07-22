@@ -8,6 +8,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "renderables/quad.h"
+#include "shaders/shaderlibrary.h"
 
 GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
 {
@@ -47,6 +48,22 @@ void setUniformMatrix3f(GLuint progId, const char* name, const glm::mat3& value)
     }
 }
 
+void setUniformVec4(GLuint progId, const char* name, const glm::vec4& value)
+{
+    GLint matLoc = glGetUniformLocation(progId, name);
+    if (matLoc >= 0) {
+        glUniform4fv(matLoc, 1, &value[0]);
+    }
+}
+
+void setUniformVec2(GLuint progId, const char* name, const glm::vec2& value)
+{
+    GLint matLoc = glGetUniformLocation(progId, name);
+    if (matLoc >= 0) {
+        glUniform2fv(matLoc, 1, &value[0]);
+    }
+}
+
 void GLViewRenderer::render()
 {
     if (!m_initialized) {
@@ -54,8 +71,27 @@ void GLViewRenderer::render()
     }
 
     glClearColor(m_backgroundColor.redF(), m_backgroundColor.greenF(), m_backgroundColor.blueF(), 1.0);
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    QSize fbSize = this->framebufferObject()->size();
+
+    if (m_backgroundRenderable) {
+        glDisable(GL_DEPTH_TEST);
+        QOpenGLShaderProgram* prog = ShaderLibrary::getShader(ShaderLibrary::CheckerShader);
+        prog->bind();
+
+        glm::vec2 size(fbSize.width(), fbSize.height());
+        glm::vec2 normalizedSize = glm::normalize(size);
+        float factor = normalizedSize.x > normalizedSize.y ? normalizedSize.x : normalizedSize.y;
+        glm::vec2 scale = normalizedSize * (factor * 10.0f);
+        setUniformVec2(prog->programId(), "Scale", scale);
+
+        m_backgroundRenderable->render();
+        glEnable(GL_DEPTH_TEST);
+    }
 
     if (m_currentRenderable) {
         m_program->bind();
@@ -77,7 +113,6 @@ void GLViewRenderer::render()
         glm::vec3 up(0, 1, 0);
         glm::mat4 viewMat = glm::lookAt(pos, pos + forward, up);
 
-        QSize fbSize = this->framebufferObject()->size();
         glm::mat4 projMat = glm::perspective(45.0f, (GLfloat) fbSize.width() / fbSize.height(), 0.1f, -1000.0f);
 
         glm::mat4 MVP = projMat * viewMat * modelMat;
@@ -94,8 +129,6 @@ void GLViewRenderer::render()
             uc->setUniform();
         }
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         m_currentRenderable->render();
     }
 }
@@ -196,6 +229,8 @@ void GLViewRenderer::setupGL()
     m_glVersion = glVersionString;
     emit glVersionChanged(m_glVersion);
 
+    ShaderLibrary::compileAll();
+
     QString vertex_source = "/Users/janekbieser/Desktop/shader_test/shader.vs";
     QString fragment_source = "/Users/janekbieser/Desktop/shader_test/shader.fs";
 
@@ -204,6 +239,7 @@ void GLViewRenderer::setupGL()
     parseUniforms();
 
     m_currentRenderable = new Quad(.5, .5);
+    m_backgroundRenderable = new Quad(2, 2);
 }
 
 typedef QHash<GLenum, QString> ShaderTypesHash;

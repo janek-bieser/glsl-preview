@@ -43,6 +43,7 @@ private:
     QString m_glVersion;
     QColor m_backgroundColor;
     Renderable* m_currentRenderable;
+    Renderable* m_backgroundRenderable;
     QPointF m_objectRotation;
 
     QMap<QString, UniformCache*> m_uniformCache;
