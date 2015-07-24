@@ -8,6 +8,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "renderables/quad.h"
+#include "renderables/cube.h"
 #include "shaders/shaderlibrary.h"
 
 GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
@@ -73,12 +74,12 @@ void GLViewRenderer::render()
     glClearColor(m_backgroundColor.redF(), m_backgroundColor.greenF(), m_backgroundColor.blueF(), 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     QSize fbSize = this->framebufferObject()->size();
 
     if (m_backgroundRenderable) {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDisable(GL_DEPTH_TEST);
         QOpenGLShaderProgram* prog = ShaderLibrary::getShader(ShaderLibrary::CheckerShader);
         prog->bind();
@@ -91,6 +92,7 @@ void GLViewRenderer::render()
 
         m_backgroundRenderable->render();
         glEnable(GL_DEPTH_TEST);
+        glDisable(GL_BLEND);
     }
 
     if (m_currentRenderable) {
@@ -238,7 +240,11 @@ void GLViewRenderer::setupGL()
 
     parseUniforms();
 
-    m_currentRenderable = new Quad(.5, .5);
+    //glEnable(GL_CULL_FACE);
+    //glCullFace(GL_BACK);
+
+    //m_currentRenderable = new Quad(.5, .5);
+    m_currentRenderable = new Cube(.5);
     m_backgroundRenderable = new Quad(2, 2);
 }
 

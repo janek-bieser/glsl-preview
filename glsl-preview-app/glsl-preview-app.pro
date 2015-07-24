@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     glview/shaderuniformlist.cpp \
     glview/shaderuniform.cpp \
     glview/vecuniformcache.cpp \
-    glview/shaders/shaderlibrary.cpp
+    glview/shaders/shaderlibrary.cpp \
+    glview/renderables/cube.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +35,5 @@ HEADERS += \
     glview/shaderuniform.h \
     glview/vecuniformcache.h \
     glview/uniformcache.h \
-    glview/shaders/shaderlibrary.h
+    glview/shaders/shaderlibrary.h \
+    glview/renderables/cube.h
