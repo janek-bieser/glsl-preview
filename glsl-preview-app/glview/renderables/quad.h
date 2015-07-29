@@ -2,7 +2,6 @@
 #define QUAD_H
 
 #include <qopengl.h>
-
 #include "renderable.h"
 
 class Quad : public Renderable

@@ -56,76 +56,19 @@ Rectangle {
                 }
             }
 
-            ListModel {
-                id: propsModel
-                ListElement { name: "LightPosition"; componentCount: 3; type: "vec" }
-                ListElement { name: "LightColor"; componentCount: 4; type: "color" }
-                ListElement { name: "LightColor"; componentCount: 4; type: "color" }
-            }
-
             Component {
                 id: vecComponent
-
-                Rectangle {
-                    height: 80
-                    width: propView.width
-                    color: "#f3f3f3"
-
-                    LabeledVectorInput {
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.margins: 12
-                        label: modelData.name
-                        numOfComponents: {
-                            var match = modelData.type.match(/^vec(2|3|4)$/);
-                            return match[1];
-                        }
-
-                        onValueChanged: {
-                            var c = getComponents();
-                            root.uniformChanged({name: modelData.name, values: c, type: modelData.type});
-                        }
-                    }
-
-                    Rectangle {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        height: 1
-                        color: "#999"
-                    }
-                }
+                VecDelegate { width: propView.width }
             }
 
             Component {
                 id: colorComponent
+                ColorDelegate { width: propView.width }
+            }
 
-                Rectangle {
-                    color: "#f3f3f3"
-                    height: 112
-                    width: propView.width
-
-                    ColorInput {
-                        label: modelData.name
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.margins: 12
-                        onColorChanged: {
-                            var c = getComponents();
-                            root.uniformChanged({name: modelData.name, values: c, type: "vec4"});
-                        }
-                    }
-
-                    Rectangle {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
-                        height: 1
-                        color: "#999"
-                    }
-                }
+            Component {
+                id: sampler2DComponent
+                Sampler2DDelegate { width: propView.width }
             }
 
             Component {
@@ -141,6 +84,8 @@ Rectangle {
                             } else {
                                 return vecComponent;
                             }
+                        } else if(type == "sampler2D") {
+                            return sampler2DComponent
                         }
                     }
                 }

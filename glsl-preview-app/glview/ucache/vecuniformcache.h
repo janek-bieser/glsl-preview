@@ -9,6 +9,7 @@ public:
     VecUniformCache(GLint location, GLuint componentCount);
     ~VecUniformCache();
 
+    // UniformCache implementation
     void setUniform();
 
     GLint location() const;

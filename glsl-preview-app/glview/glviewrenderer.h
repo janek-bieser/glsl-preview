@@ -7,9 +7,8 @@
 #include <QOpenGLShaderProgram>
 
 #include "shaderuniform.h"
-#include "vecuniformcache.h"
-
 #include "renderables/renderable.h"
+#include "ucache/uniformcache.h"
 
 class GLViewRenderer : public QObject, public QQuickFramebufferObject::Renderer
 {

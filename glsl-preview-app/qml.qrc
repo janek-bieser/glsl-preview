@@ -13,6 +13,10 @@
         <file>VectorInput.qml</file>
         <file>ColorInput.qml</file>
         <file>ColorPicker.qml</file>
+        <file>VecDelegate.qml</file>
+        <file>ColorDelegate.qml</file>
+        <file>Sampler2DDelegate.qml</file>
+        <file>Sampler2DInput.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="triangle.svg">images/triangle.svg</file>

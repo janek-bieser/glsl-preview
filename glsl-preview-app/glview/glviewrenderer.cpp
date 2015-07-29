@@ -9,6 +9,8 @@
 
 #include "renderables/quad.h"
 #include "renderables/cube.h"
+#include "ucache/vecuniformcache.h"
+#include "ucache/sampler2duniformcache.h"
 #include "shaders/shaderlibrary.h"
 
 GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
@@ -132,6 +134,8 @@ void GLViewRenderer::render()
         }
 
         m_currentRenderable->render();
+
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 }
 
@@ -162,9 +166,17 @@ void GLViewRenderer::updateUniform(const QVariantMap& uniform)
     if (!m_uniformCache.contains(name)) {
         GLuint progId = m_program->programId();
         GLint loc = glGetUniformLocation(progId, name.toStdString().c_str());
+
         if (loc >= 0) {
-            VecUniformCache* tmp = new VecUniformCache(loc, valuesLen);
-            m_uniformCache[name] = tmp;
+
+            if (type.contains("vec")) {
+                VecUniformCache* tmp = new VecUniformCache(loc, valuesLen);
+                m_uniformCache[name] = tmp;
+            } else if (type == "sampler2D") {
+                Sampler2DUniformCache* tmp = new Sampler2DUniformCache(loc, values[0].toString());
+                m_uniformCache[name] = tmp;
+            }
+
         } else {
             qWarning() << "trying to update non existing uniform";
         }
@@ -177,6 +189,10 @@ void GLViewRenderer::updateUniform(const QVariantMap& uniform)
         }
         VecUniformCache* uc = (VecUniformCache*) m_uniformCache[name];
         uc->setValues(floatValues);
+        update();
+    } else if (type == "sampler2D") {
+        Sampler2DUniformCache* uc = (Sampler2DUniformCache*) m_uniformCache[name];
+        uc->setImage(values[0].toString());
         update();
     }
 }
@@ -240,8 +256,8 @@ void GLViewRenderer::setupGL()
 
     parseUniforms();
 
-    //glEnable(GL_CULL_FACE);
-    //glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
     //m_currentRenderable = new Quad(.5, .5);
     m_currentRenderable = new Cube(.5);
