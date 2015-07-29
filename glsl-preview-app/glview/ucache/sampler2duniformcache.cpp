@@ -28,10 +28,12 @@ void Sampler2DUniformCache::setImage(const QString& imageSrc)
     }
 }
 
+#define TEX_SLOT 0
+
 void Sampler2DUniformCache::setUniform()
 {
     if (m_texId > 0) {
-        unsigned int texUnit = 0;
+        unsigned int texUnit = TEX_SLOT;
         glUniform1i(m_location, texUnit);
         glActiveTexture(GL_TEXTURE0 + texUnit);
         glBindTexture(GL_TEXTURE_2D, m_texId);
@@ -53,7 +55,9 @@ void Sampler2DUniformCache::reloadTexture()
     m_imgData = stbi_load(image_source, &width, &height, &numComponent, 4);
     qDebug() << stbi_failure_reason();
 
+    glActiveTexture(GL_TEXTURE0 + TEX_SLOT);
     glGenTextures(1, &m_texId);
+    qDebug() << "current texture" << m_texId;
     glBindTexture(GL_TEXTURE_2D, m_texId);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -65,4 +69,5 @@ void Sampler2DUniformCache::reloadTexture()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_imgData);
 
     glBindTexture(GL_TEXTURE_2D, 0);
+    glActiveTexture(GL_TEXTURE0);
 }

@@ -128,6 +128,8 @@ void GLViewRenderer::render()
         setUniformMatrix4f(progId, "slp_ProjectionMatrix", projMat);
         setUniformMatrix4f(progId, "slp_MVPMatrix", MVP);
 
+        GLuint texId = QOpenGLTexture::boundTextureId(0, QOpenGLTexture::BindingTarget2D);
+
         for (auto it = m_uniformCache.begin(); it != m_uniformCache.end(); it++) {
             UniformCache* uc = it.value();
             uc->setUniform();
@@ -135,7 +137,8 @@ void GLViewRenderer::render()
 
         m_currentRenderable->render();
 
-        glBindTexture(GL_TEXTURE_2D, 0);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texId);
     }
 }
 
