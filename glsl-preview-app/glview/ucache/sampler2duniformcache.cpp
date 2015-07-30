@@ -7,10 +7,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+static unsigned int curTexSlot = 0;
+
 Sampler2DUniformCache::Sampler2DUniformCache(GLint location, const QString& imgSrc)
     : m_location(location), m_imgSrc(imgSrc)
 {
     m_imgData = NULL;
+    m_slot = curTexSlot++;
     reloadTexture();
 }
 
@@ -28,14 +31,11 @@ void Sampler2DUniformCache::setImage(const QString& imageSrc)
     }
 }
 
-#define TEX_SLOT 0
-
 void Sampler2DUniformCache::setUniform()
 {
     if (m_texId > 0) {
-        unsigned int texUnit = TEX_SLOT;
-        glUniform1i(m_location, texUnit);
-        glActiveTexture(GL_TEXTURE0 + texUnit);
+        glUniform1i(m_location, m_slot);
+        glActiveTexture(GL_TEXTURE0 + m_slot);
         glBindTexture(GL_TEXTURE_2D, m_texId);
     }
 }
@@ -55,9 +55,8 @@ void Sampler2DUniformCache::reloadTexture()
     m_imgData = stbi_load(image_source, &width, &height, &numComponent, 4);
     qDebug() << stbi_failure_reason();
 
-    glActiveTexture(GL_TEXTURE0 + TEX_SLOT);
+    glActiveTexture(GL_TEXTURE0 + m_slot);
     glGenTextures(1, &m_texId);
-    qDebug() << "current texture" << m_texId;
     glBindTexture(GL_TEXTURE_2D, m_texId);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

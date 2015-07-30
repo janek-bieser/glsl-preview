@@ -112,12 +112,13 @@ void GLViewRenderer::render()
 
         glm::mat3 normalMat = glm::transpose(glm::inverse(glm::mat3(modelMat)));
 
-        glm::vec3 pos(0, 0, 1);
+        glm::vec3 pos(0, 0, 0.8);
         glm::vec3 forward(0, 0, -1);
         glm::vec3 up(0, 1, 0);
         glm::mat4 viewMat = glm::lookAt(pos, pos + forward, up);
 
-        glm::mat4 projMat = glm::perspective(45.0f, (GLfloat) fbSize.width() / fbSize.height(), 0.1f, -1000.0f);
+        GLfloat fov = 75 * (M_PI / 180.0f);
+        glm::mat4 projMat = glm::perspectiveFov(fov, (GLfloat) fbSize.width(), (GLfloat) fbSize.height(), 0.1f, -1000.0f);
 
         glm::mat4 MVP = projMat * viewMat * modelMat;
 

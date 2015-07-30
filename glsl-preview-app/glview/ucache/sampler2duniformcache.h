@@ -22,6 +22,7 @@ private:
     QOpenGLTexture* m_texture;
     unsigned char* m_imgData;
     GLuint m_texId;
+    unsigned int m_slot;
 
 private:
     void reloadTexture();
