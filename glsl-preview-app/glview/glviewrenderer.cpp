@@ -75,9 +75,12 @@ void GLViewRenderer::render()
         this->setupGL();
     }
 
+    // TODO(janek) only enable for 3d models, not for basic plane
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+
     glClearColor(m_backgroundColor.redF(), m_backgroundColor.greenF(), m_backgroundColor.blueF(), 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
     QSize fbSize = this->framebufferObject()->size();
 
