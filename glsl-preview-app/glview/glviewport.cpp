@@ -21,6 +21,7 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
     connect(this, &GLViewport::backgroundColorChanged, renderer, &GLViewRenderer::setBackgroundColor);
 
     connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
+    connect(this, &GLViewport::mouseWheel, renderer, &GLViewRenderer::camMove);
 
     connect(renderer, &GLViewRenderer::uniformFound, this, &GLViewport::addUniform);
 
@@ -66,6 +67,13 @@ void GLViewport::mouseMoveEvent(QMouseEvent* event)
         emit mouseMoved(offset);
         update();
     }
+}
+
+void GLViewport::wheelEvent(QWheelEvent* event)
+{
+    GLfloat delta = (GLfloat) event->pixelDelta().y();
+    emit mouseWheel(delta * 0.001);
+    update();
 }
 
 // -----------------------------------------------------------------------------

@@ -18,6 +18,7 @@ GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
     m_program = NULL;
     m_initialized = false;
     m_currentRenderable = NULL;
+    m_camZPos = 0.8;
 }
 
 GLViewRenderer::~GLViewRenderer()
@@ -112,7 +113,7 @@ void GLViewRenderer::render()
 
         glm::mat3 normalMat = glm::transpose(glm::inverse(glm::mat3(modelMat)));
 
-        glm::vec3 pos(0, 0, 0.8);
+        glm::vec3 pos(0, 0, m_camZPos);
         glm::vec3 forward(0, 0, -1);
         glm::vec3 up(0, 1, 0);
         glm::mat4 viewMat = glm::lookAt(pos, pos + forward, up);
@@ -232,6 +233,11 @@ void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
 void GLViewRenderer::rotate(QPointF rotation)
 {
     m_objectRotation += (rotation * 0.002);
+}
+
+void GLViewRenderer::camMove(GLfloat zMovement)
+{
+    m_camZPos += (GLfloat)zMovement;
 }
 
 // -----------------------------------------------------------------------------

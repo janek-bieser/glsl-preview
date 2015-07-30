@@ -29,6 +29,7 @@ public slots:
     void loadShader(const QString& vertex, const QString& fragment);
 
     void rotate(QPointF rotation);
+    void camMove(GLfloat zMovement);
 
 signals:
     void glVersionChanged(const QString& version);
@@ -44,6 +45,7 @@ private:
     Renderable* m_currentRenderable;
     Renderable* m_backgroundRenderable;
     QPointF m_objectRotation;
+    GLfloat m_camZPos;
 
     QMap<QString, UniformCache*> m_uniformCache;
 

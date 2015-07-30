@@ -26,6 +26,7 @@ public:
 
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
 
 public slots:
     void changeGLVersion(const QString& version);
@@ -39,6 +40,7 @@ signals:
     void uniformModelChanged() const;
 
     void mouseMoved(const QPointF& point) const;
+    void mouseWheel(qreal delta) const;
 
 
 private:
