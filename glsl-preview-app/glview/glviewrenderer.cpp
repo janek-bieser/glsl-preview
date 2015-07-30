@@ -18,6 +18,7 @@ GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
     m_program = NULL;
     m_initialized = false;
     m_currentRenderable = NULL;
+    m_backgroundRenderable = NULL;
     m_camZPos = 0.8;
 }
 
@@ -271,7 +272,7 @@ void GLViewRenderer::setupGL()
 
     //m_currentRenderable = new Quad(.5, .5);
     m_currentRenderable = new Cube(.5);
-    m_backgroundRenderable = new Quad(2, 2);
+    //m_backgroundRenderable = new Quad(2, 2);
 }
 
 typedef QHash<GLenum, QString> ShaderTypesHash;
