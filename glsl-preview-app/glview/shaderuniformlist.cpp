@@ -46,9 +46,16 @@ QVariant ShaderUniformList::data(const QModelIndex &index, int role) const
 
 void ShaderUniformList::add(const ShaderUniform& uniform)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_uniforms.push_back(new ShaderUniform(uniform));
-    endInsertRows();
+    if (!contains(uniform)) {
+        beginInsertRows(QModelIndex(), rowCount(), rowCount());
+        m_uniforms.push_back(new ShaderUniform(uniform));
+        endInsertRows();
+    }
+}
+
+void ShaderUniformList::clear()
+{
+    m_uniforms.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +66,11 @@ void ShaderUniformList::add(const QVariantMap& uMap)
 {
     QString name = uMap.value("name").toString();
     QString type = uMap.value("type").toString();
+    ShaderUniform* u = new ShaderUniform(name, type);
 
-    m_uniforms.push_back(new ShaderUniform(name, type));
+    if (!contains(*u)) {
+        m_uniforms.push_back(u);
+    }
 }
 
 ShaderUniform* ShaderUniformList::get(int idx) const
@@ -72,8 +82,24 @@ ShaderUniform* ShaderUniformList::get(int idx) const
     return m_uniforms[idx];
 }
 
+// -----------------------------------------------------------------------------
+// private
+// -----------------------------------------------------------------------------
 
+bool ShaderUniformList::contains(const ShaderUniform& su)
+{
+    int len = m_uniforms.length();
+    bool found = false;
 
+    for (int i = 0; i < len && !found; i++) {
+        ShaderUniform* current = m_uniforms[i];
+        if (su.name() == current->name()) {
+            found = true;
+        }
+    }
+
+    return found;
+}
 
 
 

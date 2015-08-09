@@ -17,6 +17,9 @@ VecUniformCache::~VecUniformCache()
 void VecUniformCache::setUniform()
 {
     switch (componentCount()) {
+    case 1:
+        glUniform1fv(location(), 1, values());
+        break;
     case 2:
         glUniform2fv(location(), 1, values());
         break;

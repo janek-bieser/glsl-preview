@@ -30,8 +30,13 @@ public slots:
 private:
     QString m_name;
     QString m_type;
+
 };
 
-//Q_DECLARE_METATYPE(ShaderUniform)
+inline bool
+operator ==(const ShaderUniform& lhs, const ShaderUniform& rhs)
+{
+    return lhs.name() == rhs.name() && lhs.type() == rhs.type();
+}
 
 #endif // SHADERUNIFORM_H

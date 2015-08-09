@@ -20,6 +20,8 @@ GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
     m_currentRenderable = NULL;
     m_backgroundRenderable = NULL;
     m_camZPos = 0.8;
+    m_vertexSource = "/Users/janekbieser/Desktop/shader_test/shader.vs";
+    m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/shader.fs";
 }
 
 GLViewRenderer::~GLViewRenderer()
@@ -223,6 +225,10 @@ void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
         qDebug() << fLog;
     }
 
+    if (m_program != nullptr) {
+        delete m_program;
+    }
+
     m_program = new QOpenGLShaderProgram();
     m_program->addShader(&vertexShader);
     m_program->addShader(&fragmentShader);
@@ -244,6 +250,12 @@ void GLViewRenderer::camMove(GLfloat zMovement)
     m_camZPos += (GLfloat)zMovement;
 }
 
+void GLViewRenderer::reloadProgram()
+{
+    loadShader(m_vertexSource, m_fragmentSource);
+    parseUniforms();
+}
+
 // -----------------------------------------------------------------------------
 // Private
 // -----------------------------------------------------------------------------
@@ -263,10 +275,7 @@ void GLViewRenderer::setupGL()
 
     ShaderLibrary::compileAll();
 
-    QString vertex_source = "/Users/janekbieser/Desktop/shader_test/shader.vs";
-    QString fragment_source = "/Users/janekbieser/Desktop/shader_test/shader.fs";
-
-    loadShader(vertex_source, fragment_source);
+    loadShader(m_vertexSource, m_fragmentSource);
 
     parseUniforms();
 

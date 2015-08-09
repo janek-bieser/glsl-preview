@@ -11,7 +11,7 @@ Rectangle {
         anchors.margins: 12
         label: modelData.name
         numOfComponents: {
-            var match = modelData.type.match(/^vec(2|3|4)$/);
+            var match = modelData.type.match(/^vec(1|2|3|4)$/);
             return match[1];
         }
 

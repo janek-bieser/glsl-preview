@@ -24,6 +24,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
 
     void add(const ShaderUniform& uniform);
+    void clear();
 
 public slots:
     void add(const QVariantMap& uMap);
@@ -31,6 +32,8 @@ public slots:
 
 private:
     QList<ShaderUniform*> m_uniforms;
+
+    bool contains(const ShaderUniform& su);
 };
 
 #endif // SHADERUNIFORMLIST_H

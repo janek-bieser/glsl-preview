@@ -86,6 +86,9 @@ Rectangle {
                             }
                         } else if(type == "sampler2D") {
                             return sampler2DComponent
+                        } else if (type == "float") {
+                            modelData.type = "vec1";
+                            return vecComponent;
                         }
                     }
                 }

@@ -32,12 +32,14 @@ public slots:
     void changeGLVersion(const QString& version);
     void updateUniform(const QVariantMap& uniform);
     void addUniform(const ShaderUniform& uniform);
+    void reloadProgram();
 
 signals:
     void glVersionChanged() const;
     void uniformChanged(const QVariantMap& uniform) const;
     void backgroundColorChanged(QColor color) const;
     void uniformModelChanged() const;
+    void programChanged() const;
 
     void mouseMoved(const QPointF& point) const;
     void mouseWheel(qreal delta) const;

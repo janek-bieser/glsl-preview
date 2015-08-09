@@ -19,6 +19,7 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
     connect(renderer, &GLViewRenderer::glVersionChanged, this, &GLViewport::changeGLVersion);
     connect(this, &GLViewport::uniformChanged, renderer, &GLViewRenderer::updateUniform);
     connect(this, &GLViewport::backgroundColorChanged, renderer, &GLViewRenderer::setBackgroundColor);
+    connect(this, &GLViewport::programChanged, renderer, &GLViewRenderer::reloadProgram);
 
     connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
     connect(this, &GLViewport::mouseWheel, renderer, &GLViewRenderer::camMove);
@@ -97,6 +98,13 @@ void GLViewport::addUniform(const ShaderUniform& uniform)
 {
     qDebug() << uniform.name() << uniform.type();
     m_uniformList.add(uniform);
+}
+
+void GLViewport::reloadProgram()
+{
+    m_uniformList.clear();
+    emit programChanged();
+    update();
 }
 
 

@@ -30,7 +30,7 @@ ApplicationWindow {
             title: qsTr("&Program")
             MenuItem {
                 text: "&Build Program"
-                onTriggered: console.log("build program")
+                onTriggered: glViewport.reloadShaders()
                 shortcut: "Ctrl+b"
             }
         }

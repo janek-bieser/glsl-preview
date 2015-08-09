@@ -96,6 +96,11 @@ Item {
         console.log("loading: " + shaderFiles.vertex + ", " + shaderFiles.fragment);
     }
 
+    function reloadShaders() {
+        console.log("reload shaders");
+        viewport.reloadProgram();
+    }
+
     function updateUniform(uniform) {
         viewport.updateUniform(uniform);
     }
