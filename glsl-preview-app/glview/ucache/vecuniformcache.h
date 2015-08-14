@@ -7,12 +7,13 @@ class VecUniformCache : public UniformCache
 {
 public:
     VecUniformCache(GLint location, GLuint componentCount);
+    VecUniformCache(const VecUniformCache& other);
     ~VecUniformCache();
 
     // UniformCache implementation
     void setUniform();
+    QString typeString();
 
-    GLint location() const;
     GLuint componentCount() const;
 
     const GLfloat* values() const;
@@ -21,7 +22,6 @@ public:
 private:
     GLfloat* m_values;
     GLuint m_numComponent;
-    GLint m_location;
 };
 
 #endif // UNIFORMCACHE_H

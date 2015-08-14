@@ -4,7 +4,10 @@ Rectangle {
     height: 80
     color: "#f3f3f3"
 
+    property var uniformCache
+
     LabeledVectorInput {
+        id: vecInput
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.right: parent.right
@@ -17,6 +20,7 @@ Rectangle {
 
         onValueChanged: {
             var c = getComponents();
+            uniformCache.setValue(modelData.name, {value: c, type: "vec" + numOfComponents});
             root.uniformChanged({name: modelData.name, values: c, type: modelData.type});
         }
     }
@@ -27,6 +31,14 @@ Rectangle {
         anchors.bottom: parent.bottom
         height: 1
         color: "#999"
+    }
+
+    function readCachedValue() {
+        var value = uniformCache.getValue(modelData.name);
+
+        if (value && value.type === modelData.type) {
+            vecInput.setComponents(value.value);
+        }
     }
 }
 

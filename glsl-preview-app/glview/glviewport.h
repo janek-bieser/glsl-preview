@@ -31,7 +31,7 @@ public:
 public slots:
     void changeGLVersion(const QString& version);
     void updateUniform(const QVariantMap& uniform);
-    void addUniform(const ShaderUniform& uniform);
+    void setUniforms(const QList<ShaderUniform*>& uniforms);
     void reloadProgram();
 
 signals:
@@ -50,7 +50,7 @@ private:
     QColor m_backgroundColor;
     QPointF m_lastMousePos;
 
-    ShaderUniformList m_uniformList;
+    ShaderUniformList* m_uniformList;
 };
 
 #endif // GLVIEWPORT_H

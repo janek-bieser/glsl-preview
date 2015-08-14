@@ -39,5 +39,9 @@ ColumnLayout {
         return vecInput.getComponents();
     }
 
+    function setComponents(c) {
+        vecInput.setComponents(c);
+    }
+
 }
 

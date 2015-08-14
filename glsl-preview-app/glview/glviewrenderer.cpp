@@ -1,7 +1,10 @@
 #include "glviewrenderer.h"
 
+#include <vector>
+
 #include <QColor>
 #include <QThread>
+#include <QRegularExpression>
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
@@ -324,6 +327,8 @@ void GLViewRenderer::parseUniforms()
     GLint numActiveUniforms;
     glGetProgramiv(progId, GL_ACTIVE_UNIFORMS, &numActiveUniforms);
 
+    QList<ShaderUniform*> foundUniforms;
+
     for (int i = 0; i < numActiveUniforms; i++) {
         GLint size;
         GLenum type;
@@ -334,11 +339,56 @@ void GLViewRenderer::parseUniforms()
         QString uniformName = QString::fromUtf8(name);
         QString uniformType = stringType(type);
 
-        ShaderUniform uniform;
-        uniform.setName(uniformName);
-        uniform.setType(uniformType);
+        ShaderUniform* uniform = new ShaderUniform(uniformName, uniformType);
+        foundUniforms.push_back(uniform);
+    }
 
-        emit uniformFound(uniform);
+    if (foundUniforms.size() > 0) {
+        updateUniformCache(foundUniforms);
+        emit uniformsFound(foundUniforms);
+        qDebug() << "After emit found uniforms";
+    }
+}
+
+void GLViewRenderer::updateUniformCache(const QList<ShaderUniform*>& uniforms)
+{
+    QMap<QString, UniformCache*> oldCache = m_uniformCache;
+    QMap<QString, UniformCache*> newCache;
+
+    int len = uniforms.size();
+    GLuint progId = m_program->programId();
+
+    for (int i = 0; i < len; i++) {
+        ShaderUniform* s = uniforms[i];
+
+        // if the same variable exists in the old cache (name and type have to match)
+        if (oldCache.contains(s->name()) && s->type() == oldCache[s->name()]->typeString()) {
+
+            GLint loc = glGetUniformLocation(progId, s->name().toStdString().c_str());
+
+            if (loc >= 0) {
+
+                if (s->type().contains("vec") || s->type() == "float") {
+                    VecUniformCache* oldC = static_cast<VecUniformCache*>(oldCache[s->name()]);
+                    UniformCache* c = new VecUniformCache(*oldC);
+                    c->setLocation(loc);
+                    newCache[s->name()] = c;
+                } else if (s->type() == "sampler2d") {
+                    Sampler2DUniformCache* oldC = static_cast<Sampler2DUniformCache*>(oldCache[s->name()]);
+                    UniformCache* c = new Sampler2DUniformCache(*oldC);
+                    c->setLocation(loc);
+                    newCache[s->name()] = c;
+                }
+
+            }
+        }
+
+    }
+
+    m_uniformCache = newCache;
+
+    for (auto it = oldCache.begin(); it != oldCache.end(); it++) {
+        delete *it;
     }
 }
 

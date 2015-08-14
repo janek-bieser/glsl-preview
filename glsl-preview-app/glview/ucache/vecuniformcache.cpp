@@ -3,9 +3,20 @@
 #include <qdebug.h>
 
 VecUniformCache::VecUniformCache(GLint location, GLuint componentCount)
-    : m_numComponent(componentCount), m_location(location)
+    : m_numComponent(componentCount)
 {
     m_values = (GLfloat*) calloc(m_numComponent, sizeof(GLfloat));
+    m_location = location;
+}
+
+VecUniformCache::VecUniformCache(const VecUniformCache &other)
+{
+    m_numComponent = other.m_numComponent;
+    m_location = other.m_location;
+    m_values = (GLfloat*) calloc(m_numComponent, sizeof(GLfloat));
+    for (int i = 0; i < m_numComponent; i++) {
+        m_values[i] = other.m_values[i];
+    }
 }
 
 VecUniformCache::~VecUniformCache()
@@ -35,9 +46,24 @@ void VecUniformCache::setUniform()
     }
 }
 
-GLint VecUniformCache::location() const
+QString VecUniformCache::typeString()
 {
-    return m_location;
+    QString type = "";
+    switch (componentCount()) {
+    case 1:
+        type = "float";
+        break;
+    case 2:
+    case 3:
+    case 4:
+        type = "vec" + componentCount();
+        break;
+    default:
+        qDebug() << "unknown vector type";
+        break;
+    }
+
+    return type;
 }
 
 GLuint VecUniformCache::componentCount() const

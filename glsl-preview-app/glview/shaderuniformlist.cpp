@@ -53,9 +53,24 @@ void ShaderUniformList::add(const ShaderUniform& uniform)
     }
 }
 
+void ShaderUniformList::setUniforms(const QList<ShaderUniform*>& uniforms)
+{
+    int len = uniforms.length();
+    for (int i = 0; i < len; i++) {
+        add(*uniforms[i]);
+    }
+}
+
 void ShaderUniformList::clear()
 {
-    m_uniforms.clear();
+    while(!m_uniforms.isEmpty()) {
+        beginRemoveRows(QModelIndex(), rowCount(), rowCount());
+        ShaderUniform* u = m_uniforms.last();
+        delete u;
+        m_uniforms.pop_back();
+        endRemoveRows();
+    }
+    qDebug() << "Uniform Count" << m_uniforms.count();
 }
 
 // -----------------------------------------------------------------------------

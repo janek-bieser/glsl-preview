@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     qRegisterMetaType<ShaderUniform>("ShaderUniform");
+    qRegisterMetaType<QList<ShaderUniform*>>("QList<ShaderUniform*>");
 
     qmlRegisterType<GLViewport>("GLRendering", 1, 0, "GLViewport");
     qmlRegisterType<ShaderUniform>("GLRendering", 1, 0, "ShaderUniform");

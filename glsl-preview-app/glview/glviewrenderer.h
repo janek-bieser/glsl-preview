@@ -36,7 +36,8 @@ signals:
     void glVersionChanged(const QString& version);
     void backgroundColorChanged(QColor color);
 
-    void uniformFound(const ShaderUniform& uniform);
+    void uniformsFound(const QList<ShaderUniform*>& uniform);
+    void uniformParsingCompleted();
 
 private:
     QOpenGLShaderProgram* m_program;
@@ -55,6 +56,7 @@ private:
 private:
     void setupGL();
     void parseUniforms();
+    void updateUniformCache(const QList<ShaderUniform*>& uniforms);
 };
 
 #endif // GLVIEWRENDERER_H

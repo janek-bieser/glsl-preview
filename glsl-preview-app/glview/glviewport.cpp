@@ -6,10 +6,13 @@
 GLViewport::GLViewport(QQuickItem* parent) : QQuickFramebufferObject(parent)
 {
     setAcceptedMouseButtons(Qt::AllButtons);
+    m_uniformList = new ShaderUniformList();
 }
 
 GLViewport::~GLViewport()
 {
+    delete m_uniformList;
+    m_uniformList = nullptr;
 }
 
 QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
@@ -24,7 +27,7 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
     connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
     connect(this, &GLViewport::mouseWheel, renderer, &GLViewRenderer::camMove);
 
-    connect(renderer, &GLViewRenderer::uniformFound, this, &GLViewport::addUniform);
+    connect(renderer, &GLViewRenderer::uniformsFound, this, &GLViewport::setUniforms);
 
     return renderer;
 }
@@ -50,7 +53,7 @@ void GLViewport::setBackgroundColor(QColor color)
 
 ShaderUniformList* GLViewport::uniformModel()
 {
-    return &m_uniformList;
+    return m_uniformList;
 }
 
 void GLViewport::mousePressEvent(QMouseEvent* event)
@@ -94,15 +97,21 @@ void GLViewport::updateUniform(const QVariantMap& uniform)
     emit uniformChanged(uniform);
 }
 
-void GLViewport::addUniform(const ShaderUniform& uniform)
+void GLViewport::setUniforms(const QList<ShaderUniform*>& uniforms)
 {
-    qDebug() << uniform.name() << uniform.type();
-    m_uniformList.add(uniform);
+    ShaderUniformList* uList = new ShaderUniformList();
+    uList->setUniforms(uniforms);
+    delete m_uniformList;
+    m_uniformList = uList;
+    emit uniformModelChanged();
+
+    for (auto it = uniforms.begin(); it != uniforms.end(); it++) {
+        delete (*it);
+    }
 }
 
 void GLViewport::reloadProgram()
 {
-    m_uniformList.clear();
     emit programChanged();
     update();
 }

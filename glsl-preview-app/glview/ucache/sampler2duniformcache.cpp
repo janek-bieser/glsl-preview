@@ -10,9 +10,19 @@
 static unsigned int curTexSlot = 0;
 
 Sampler2DUniformCache::Sampler2DUniformCache(GLint location, const QString& imgSrc)
-    : m_location(location), m_imgSrc(imgSrc)
+    : m_imgSrc(imgSrc)
 {
+    m_location = location;
     m_imgData = NULL;
+    m_slot = curTexSlot++;
+    reloadTexture();
+}
+
+Sampler2DUniformCache::Sampler2DUniformCache(const Sampler2DUniformCache &other)
+{
+    m_imgSrc = other.m_imgSrc;
+    m_location = other.m_location;
+    m_imgData = nullptr;
     m_slot = curTexSlot++;
     reloadTexture();
 }
@@ -38,6 +48,11 @@ void Sampler2DUniformCache::setUniform()
         glActiveTexture(GL_TEXTURE0 + m_slot);
         glBindTexture(GL_TEXTURE_2D, m_texId);
     }
+}
+
+QString Sampler2DUniformCache::typeString()
+{
+    return "sampler2d";
 }
 
 void Sampler2DUniformCache::reloadTexture()

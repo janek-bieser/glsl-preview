@@ -24,6 +24,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
 
     void add(const ShaderUniform& uniform);
+    void setUniforms(const QList<ShaderUniform*>& uniforms);
     void clear();
 
 public slots:

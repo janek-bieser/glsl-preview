@@ -17,6 +17,7 @@
         <file>ColorDelegate.qml</file>
         <file>Sampler2DDelegate.qml</file>
         <file>Sampler2DInput.qml</file>
+        <file>UniformCache.js</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="triangle.svg">images/triangle.svg</file>

@@ -2,6 +2,8 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
+import "UniformCache.js" as UniformCache
+
 Rectangle {
     property alias uniformModel: uniformList.model
 
@@ -58,17 +60,17 @@ Rectangle {
 
             Component {
                 id: vecComponent
-                VecDelegate { width: propView.width }
+                VecDelegate { width: propView.width; uniformCache: UniformCache }
             }
 
             Component {
                 id: colorComponent
-                ColorDelegate { width: propView.width }
+                ColorDelegate { width: propView.width; uniformCache: UniformCache }
             }
 
             Component {
                 id: sampler2DComponent
-                Sampler2DDelegate { width: propView.width }
+                Sampler2DDelegate { width: propView.width; uniformCache: UniformCache }
             }
 
             Component {
@@ -91,6 +93,11 @@ Rectangle {
                             return vecComponent;
                         }
                     }
+                    function readCachedValue() {
+                        if (item != null) {
+                            item.readCachedValue();
+                        }
+                    }
                 }
             }
 
@@ -103,8 +110,19 @@ Rectangle {
 
                 ListView {
                     id: uniformList
-                    //model: propsModel
                     delegate: inspectorDelegate
+
+                    onModelChanged: {
+                        UniformCache.reset(model);
+
+                        var len = uniformList.count;
+                        var lastIdx = uniformList.currentIndex;
+                        for (var i = 0; i < len; i++) {
+                            uniformList.currentIndex = i;
+                            uniformList.currentItem.readCachedValue();
+                        }
+                        uniformList.currentIndex = lastIdx;
+                    }
                 }
             }
         }
@@ -159,6 +177,7 @@ Rectangle {
                             font.pointSize: 14
                         }
                     }
+
                 }
             }
         }
