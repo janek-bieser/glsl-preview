@@ -33,11 +33,37 @@ Item {
 
         color: "#f3f3f3"
 
-        Text {
-            text: "OpenGL v" + viewport.glVersion
+        Label {
+            id: modelLbl
+            text: "Model"
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 12
+        }
+
+        ComboBox {
+            property int lastIndex: 0
+            property int selectedModelIndex: 0
+
+            anchors.left: modelLbl.right
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.margins: 12
+
+            model: ["Plane", "Cube", "Load Custom..."]
+
+            onCurrentIndexChanged: {
+                if (currentIndex == model.length-1) {
+                    console.log("load custom model");
+                    currentIndex = lastIndex;
+                } else {
+                    lastIndex = currentIndex;
+                    selectedModelIndex = currentIndex;
+                }
+            }
+
+            onSelectedModelIndexChanged: {
+                console.log("select: " + model[selectedModelIndex]);
+            }
         }
 
         Text {
