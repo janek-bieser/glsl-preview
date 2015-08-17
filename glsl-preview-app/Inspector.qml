@@ -53,7 +53,7 @@ Rectangle {
 
                 Text {
                     anchors.centerIn: parent
-                    text: "Uniforms"
+                    text: "Uniform Inspector"
                     font.pointSize: 16
                 }
             }
@@ -137,6 +137,7 @@ Rectangle {
                     model: ListModel {
                         ListElement { name: "slp_Vertex (location=0)"; type: "vec3"; category: "Attributes" }
                         ListElement { name: "slp_Normal (location=1)"; type: "vec3"; category: "Attributes" }
+                        ListElement { name: "slp_TexCoords (location=2)"; type: "vec2"; category: "Attributes" }
 
                         ListElement { name: "slp_ModelMatrix"; type: "mat4"; category: "Uniforms" }
                         ListElement { name: "slp_ViewMatrix"; type: "mat4"; category: "Uniforms" }

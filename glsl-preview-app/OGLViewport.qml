@@ -49,7 +49,6 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 12
 
-            //model: ["Plane", "Cube", "Load Custom..."]
             model: ListModel {
                 id: meshModel
                 ListElement { text: "Plane" }
