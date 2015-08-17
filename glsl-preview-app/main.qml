@@ -161,7 +161,7 @@ ApplicationWindow {
                     _lastHeight = height;
                     _goalHeight = 0;
                 } else {
-                    _goalHeight = _lastHeight;
+                    _goalHeight = _lastHeight >= 100 ? _lastHeight : 100;
                 }
 
                 anim.start();
