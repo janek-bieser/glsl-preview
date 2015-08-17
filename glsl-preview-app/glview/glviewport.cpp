@@ -23,6 +23,7 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
     connect(this, &GLViewport::uniformChanged, renderer, &GLViewRenderer::updateUniform);
     connect(this, &GLViewport::backgroundColorChanged, renderer, &GLViewRenderer::setBackgroundColor);
     connect(this, &GLViewport::programChanged, renderer, &GLViewRenderer::reloadProgram);
+    connect(this, &GLViewport::modelSelected, renderer, &GLViewRenderer::selectModel);
 
     connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
     connect(this, &GLViewport::mouseWheel, renderer, &GLViewRenderer::camMove);
@@ -114,6 +115,12 @@ void GLViewport::reloadProgram()
 {
     emit programChanged();
     update();
+}
+
+void GLViewport::selectModel(const QVariantMap &modelInfo)
+{
+    emit modelSelected(modelInfo);
+    //update();
 }
 
 

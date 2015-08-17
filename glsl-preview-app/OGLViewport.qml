@@ -49,10 +49,17 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 12
 
-            model: ["Plane", "Cube", "Load Custom..."]
+            //model: ["Plane", "Cube", "Load Custom..."]
+            model: ListModel {
+                id: meshModel
+                ListElement { text: "Plane" }
+                ListElement { text: "Cube" }
+                ListElement { text: "monkey.obj"; path: "/Users/janekbieser/Desktop/monkey2.obj" }
+                ListElement { text: "Load Custom..." }
+            }
 
             onCurrentIndexChanged: {
-                if (currentIndex == model.length-1) {
+                if (currentIndex == meshModel.count-1) {
                     console.log("load custom model");
                     currentIndex = lastIndex;
                 } else {
@@ -62,7 +69,12 @@ Item {
             }
 
             onSelectedModelIndexChanged: {
-                console.log("select: " + model[selectedModelIndex]);
+                var modelData = meshModel.get(selectedModelIndex);
+                var meshData = { name: modelData.text };
+                if (modelData.path) {
+                    meshData.path = modelData.path;
+                }
+                viewport.selectModel(meshData);
             }
         }
 

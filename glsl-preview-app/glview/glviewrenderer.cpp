@@ -12,6 +12,7 @@
 
 #include "renderables/quad.h"
 #include "renderables/cube.h"
+#include "renderables/objmodel.h"
 #include "ucache/vecuniformcache.h"
 #include "ucache/sampler2duniformcache.h"
 #include "shaders/shaderlibrary.h"
@@ -23,8 +24,11 @@ GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
     m_currentRenderable = NULL;
     m_backgroundRenderable = NULL;
     m_camZPos = 0.8;
+
     m_vertexSource = "/Users/janekbieser/Desktop/shader_test/shader.vs";
     m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/shader.fs";
+    //m_vertexSource = "/Users/janekbieser/Desktop/shader_test/simple.vs";
+    //m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/simple.fs";
 }
 
 GLViewRenderer::~GLViewRenderer()
@@ -259,6 +263,27 @@ void GLViewRenderer::reloadProgram()
     parseUniforms();
 }
 
+void GLViewRenderer::selectModel(const QVariantMap &modelInfo)
+{
+    QString name = modelInfo.value("name").toString();
+    if (modelInfo.contains("path")) {
+        QString path = modelInfo.value("path").toString();
+        if (m_customRenderables.contains(path)) {
+            m_currentRenderable = m_customRenderables[path];
+            update();
+        } else {
+            m_customRenderables[path] = new OBJModel(path);
+            m_currentRenderable = m_customRenderables[path];
+            update();
+        }
+    } else {
+        if (m_builtinRenderables.contains(name)) {
+            m_currentRenderable = m_builtinRenderables[name];
+            update();
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Private
 // -----------------------------------------------------------------------------
@@ -285,9 +310,10 @@ void GLViewRenderer::setupGL()
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
 
-    //m_currentRenderable = new Quad(.5, .5);
-    m_currentRenderable = new Cube(.5);
-    //m_backgroundRenderable = new Quad(2, 2);
+    m_builtinRenderables["Plane"] = new Quad(.5, .5);
+    m_builtinRenderables["Cube"] = new Cube(.5);
+
+    m_currentRenderable = m_builtinRenderables["Plane"];
 }
 
 typedef QHash<GLenum, QString> ShaderTypesHash;

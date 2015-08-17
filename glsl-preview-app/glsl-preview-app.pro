@@ -15,7 +15,9 @@ SOURCES += main.cpp \
     glview/shaders/shaderlibrary.cpp \
     glview/renderables/cube.cpp \
     glview/ucache/vecuniformcache.cpp \
-    glview/ucache/sampler2duniformcache.cpp
+    glview/ucache/sampler2duniformcache.cpp \
+    glview/obj_loader.c \
+    glview/renderables/objmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -41,4 +43,6 @@ HEADERS += \
     glview/ucache/uniformcache.h \
     glview/ucache/vecuniformcache.h \
     glview/ucache/sampler2duniformcache.h \
-    glview/ucache/stb_image.h
+    glview/ucache/stb_image.h \
+    glview/obj_loader.h \
+    glview/renderables/objmodel.h

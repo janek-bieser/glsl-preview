@@ -28,6 +28,7 @@ public slots:
     void updateUniform(const QVariantMap& uniform);
     void loadShader(const QString& vertex, const QString& fragment);
     void reloadProgram();
+    void selectModel(const QVariantMap& modelInfo);
 
     void rotate(QPointF rotation);
     void camMove(GLfloat zMovement);
@@ -44,8 +45,12 @@ private:
     bool m_initialized;
     QString m_glVersion;
     QColor m_backgroundColor;
+
     Renderable* m_currentRenderable;
     Renderable* m_backgroundRenderable;
+    QMap<QString, Renderable*> m_builtinRenderables;
+    QMap<QString, Renderable*> m_customRenderables;
+
     QPointF m_objectRotation;
     GLfloat m_camZPos;
     QString m_vertexSource;
