@@ -5,6 +5,7 @@ QT += qml quick widgets
 CONFIG += c++11
 
 TARGET = "GLSL Preview"
+ICON = "glsl-preview.icns"
 
 SOURCES += main.cpp \
     glview/glviewport.cpp \

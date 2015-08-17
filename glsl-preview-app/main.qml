@@ -23,7 +23,7 @@ ApplicationWindow {
             title: "&GLSL Preview"
             MenuItem {
                 text: "&About GLSL Preview"
-                onTriggered: console.log("Show About")
+                onTriggered: aboutDialog.open()
             }
         }
 
@@ -95,6 +95,49 @@ ApplicationWindow {
             }
 
             glViewport.loadShader({ vertex: vs, fragment: fs });
+        }
+    }
+
+    Dialog {
+        id: aboutDialog
+        title: "About"
+        modality: Qt.ApplicationModal
+        contentItem: Rectangle {
+            anchors.fill: parent
+            color: "#eee"
+            implicitWidth: 280
+            implicitHeight: 340
+
+            Item {
+                width: parent.implicitWidth
+                height: parent.implicitHeight
+                anchors.centerIn: parent
+                Image {
+                    id: aboutImg
+                    source: "images/cube_256.png"
+                    width: 128
+                    height: 128
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: 20
+                }
+
+                Label {
+                    id: aboutTitle
+                    text: "GLSL Preview"
+                    font.pointSize: 16
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: aboutImg.bottom
+                }
+
+                Label {
+                    anchors.top: aboutTitle.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.topMargin: 24
+                    textFormat: TextEdit.RichText
+                    text: "<div style='text-align: center'><p>Concept<br/>Design<br/>Programming</p><p>by</p><p><strong>Janek Bieser</strong><br/>j.bieser@fh-bingen.de</p></div>"
+                }
+            }
         }
     }
 

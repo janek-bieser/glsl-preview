@@ -24,5 +24,6 @@
     <qresource prefix="/images">
         <file alias="triangle.svg">images/triangle.svg</file>
         <file alias="checker_bg.svg">images/checker_bg.svg</file>
+        <file alias="cube_256.png">images/cube_256.png</file>
     </qresource>
 </RCC>
