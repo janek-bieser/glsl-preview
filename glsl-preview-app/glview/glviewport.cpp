@@ -25,6 +25,7 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
     connect(this, &GLViewport::modelSelected, renderer, &GLViewRenderer::selectModel);
     connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
     connect(this, &GLViewport::mouseWheel, renderer, &GLViewRenderer::camMove);
+    connect(this, &GLViewport::shaderSourceChanged, renderer, &GLViewRenderer::loadShader);
 
     connect(renderer, &GLViewRenderer::glVersionChanged, this, &GLViewport::changeGLVersion);
     connect(renderer, &GLViewRenderer::uniformsFound, this, &GLViewport::setUniforms);
@@ -131,6 +132,12 @@ void GLViewport::errorDetected(const QString &errorMsg)
 void GLViewport::messageDetected(const QString &type, const QString &msg)
 {
     emit message(type, msg);
+}
+
+void GLViewport::loadShaders(const QString &vertex, const QString &fragment)
+{
+    emit shaderSourceChanged(vertex, fragment);
+    update();
 }
 
 

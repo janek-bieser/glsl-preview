@@ -4,21 +4,19 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 
 RowLayout {
-    property alias fileUrl: _fileDialog.fileUrl
-
-    anchors.left: parent.left
-    anchors.right: parent.right
+    id: root
+    property string fileUrl
 
     TextField {
         id: _txt
-        anchors.left: parent.left
-        anchors.right: _btn.left
-        anchors.rightMargin: 10
+        Layout.fillWidth: true
+        onTextChanged: {
+            fileUrl = text;
+        }
     }
 
     Button {
         id: _btn
-        anchors.right: parent.right
         text: qsTr("Select...")
         onClicked: {
             _fileDialog.open();

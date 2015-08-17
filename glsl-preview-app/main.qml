@@ -28,6 +28,17 @@ ApplicationWindow {
         }
 
         Menu {
+            title: qsTr("&File")
+            MenuItem {
+                text: qsTr("&Open Shader...")
+                onTriggered: {
+                    shaderDialog.open();
+                }
+                shortcut: "Ctrl+o"
+            }
+        }
+
+        Menu {
             title: qsTr("&Program")
             MenuItem {
                 text: "&Build Program"
@@ -67,6 +78,23 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("&Contact Support...")
             }
+        }
+    }
+
+    ShaderSelectionDialog {
+        id: shaderDialog
+        onAccepted: {
+            var vs = vertexShader.toString();
+            var fs = fragmentShader.toString();
+
+            if (vs.indexOf("file://") >= 0) {
+                vs = vs.substring(7);
+            }
+            if (fs.indexOf("file://") >= 0) {
+                fs = fs.substring(7);
+            }
+
+            glViewport.loadShader({ vertex: vs, fragment: fs });
         }
     }
 

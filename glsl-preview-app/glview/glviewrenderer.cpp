@@ -23,10 +23,8 @@ GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
     m_initialized = false;
     m_currentRenderable = NULL;
     m_backgroundRenderable = NULL;
-    m_camZPos = 0.8;
+    m_camZPos = 1;
 
-    //m_vertexSource = "/Users/janekbieser/Desktop/shader_test/shader.vs";
-    //m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/shader.fs";
     m_vertexSource = "/Users/janekbieser/Desktop/shader_test/simple.vs";
     m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/simple.fs";
 }
@@ -217,37 +215,11 @@ void GLViewRenderer::updateUniform(const QVariantMap& uniform)
 
 void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
 {
-    qDebug() << "Loading Shader(" << vertex << "," << fragment << ")";
-    QOpenGLShader vertexShader(QOpenGLShader::Vertex);
-    vertexShader.compileSourceFile(vertex);
-    QString vLog = vertexShader.log();
-    if (vLog.size() > 0) {
-        qDebug() << vLog;
-        emit message("error", "Vertex Shader : " + vLog);
-    }
-
-    QOpenGLShader fragmentShader(QOpenGLShader::Fragment);
-    fragmentShader.compileSourceFile(fragment);
-    QString fLog = fragmentShader.log();
-    if (fLog.size() > 0) {
-        qDebug() << fLog;
-        emit message("error", "Fragment Shader : " + fLog);
-    }
-
-    if (m_program != nullptr) {
-        delete m_program;
-    }
-
-    m_program = new QOpenGLShaderProgram();
-    m_program->addShader(&vertexShader);
-    m_program->addShader(&fragmentShader);
-    m_program->link();
-
-    QString progLog = m_program->log();
-    if (progLog.size() > 0) {
-        qDebug() << progLog;
-        emit message("error", progLog);
-    }
+    m_vertexSource = vertex;
+    m_fragmentSource = fragment;
+    compileProgram();
+    parseUniforms();
+    update();
 }
 
 void GLViewRenderer::rotate(QPointF rotation)
@@ -291,6 +263,41 @@ void GLViewRenderer::selectModel(const QVariantMap &modelInfo)
 // Private
 // -----------------------------------------------------------------------------
 
+void GLViewRenderer::compileProgram()
+{
+    qDebug() << "Loading Shader(" << m_vertexSource << "," << m_fragmentSource << ")";
+    QOpenGLShader vertexShader(QOpenGLShader::Vertex);
+    vertexShader.compileSourceFile(m_vertexSource);
+    QString vLog = vertexShader.log();
+    if (vLog.size() > 0) {
+        qDebug() << vLog;
+        emit message("error", "Vertex Shader : " + vLog);
+    }
+
+    QOpenGLShader fragmentShader(QOpenGLShader::Fragment);
+    fragmentShader.compileSourceFile(m_fragmentSource);
+    QString fLog = fragmentShader.log();
+    if (fLog.size() > 0) {
+        qDebug() << fLog;
+        emit message("error", "Fragment Shader : " + fLog);
+    }
+
+    if (m_program != nullptr) {
+        delete m_program;
+    }
+
+    m_program = new QOpenGLShaderProgram();
+    m_program->addShader(&vertexShader);
+    m_program->addShader(&fragmentShader);
+    m_program->link();
+
+    QString progLog = m_program->log();
+    if (progLog.size() > 0) {
+        qDebug() << progLog;
+        emit message("error", progLog);
+    }
+}
+
 void GLViewRenderer::setupGL()
 {
     m_initialized = true;
@@ -306,8 +313,7 @@ void GLViewRenderer::setupGL()
 
     ShaderLibrary::compileAll();
 
-    loadShader(m_vertexSource, m_fragmentSource);
-
+    compileProgram();
     parseUniforms();
 
     glEnable(GL_CULL_FACE);

@@ -2,16 +2,11 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
-Rectangle {
+Item {
     signal filesSelected(var sources)
 
-    width: 450
-    height: 250
-
-    color: "#f3f3f3"
-
-    border.color: "black"
-    border.width: 1
+    implicitWidth: 450
+    implicitHeight: 200
 
     Text {
         id: _header
@@ -40,7 +35,11 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             Label { text: "Vertex Shader" }
-            FileInput { id: _vertexInput }
+            FileInput {
+                id: _vertexInput
+                anchors.left: parent.left
+                anchors.right: parent.right
+            }
         }
 
         ColumnLayout {
@@ -48,19 +47,6 @@ Rectangle {
             anchors.right: parent.right
             Label { text: "Fragment Shader" }
             FileInput { id: _fragmentInput }
-        }
-    }
-
-    Button {
-        text: "Ok"
-        width: 80
-
-        anchors.top: _inputs.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 30
-
-        onClicked: {
-            filesSelected( { vertex: _vertexInput.fileUrl, fragment: _fragmentInput.fileUrl } );
         }
     }
 }

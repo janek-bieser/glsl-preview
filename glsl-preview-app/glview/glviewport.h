@@ -32,6 +32,7 @@ public slots:
     void changeGLVersion(const QString& version);
     void updateUniform(const QVariantMap& uniform);
     void setUniforms(const QList<ShaderUniform*>& uniforms);
+    void loadShaders(const QString& vertex, const QString& fragment);
     void reloadProgram();
     void selectModel(const QVariantMap& modelInfo);
     void errorDetected(const QString& errorMsg);
@@ -43,6 +44,7 @@ signals:
     void backgroundColorChanged(QColor color) const;
     void uniformModelChanged() const;
     void programChanged() const;
+    void shaderSourceChanged(const QString& vertex, const QString& fragment) const;
     void modelSelected(const QVariantMap& modelInfo) const;
     void error(const QString& errorMsg) const;
     void message(const QString& type, const QString& messageText) const;

@@ -63,6 +63,7 @@ private:
 private:
     void setupGL();
     void parseUniforms();
+    void compileProgram();
     void updateUniformCache(const QList<ShaderUniform*>& uniforms);
 };
 

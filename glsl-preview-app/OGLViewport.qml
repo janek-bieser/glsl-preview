@@ -163,10 +163,10 @@ Item {
 
     function loadShader(shaderFiles) {
         console.log("loading: " + shaderFiles.vertex + ", " + shaderFiles.fragment);
+        viewport.loadShaders(shaderFiles.vertex, shaderFiles.fragment);
     }
 
     function reloadShaders() {
-        console.log("reload shaders");
         viewport.reloadProgram();
     }
 
