@@ -48,7 +48,6 @@ Item {
                 id: meshModel
                 ListElement { text: "Plane" }
                 ListElement { text: "Cube" }
-                ListElement { text: "monkey.obj"; path: "/Users/janekbieser/Desktop/monkey2.obj" }
                 ListElement { text: "Load Custom..." }
             }
 
@@ -56,6 +55,7 @@ Item {
                 if (currentIndex == meshModel.count-1) {
                     console.log("load custom model");
                     currentIndex = lastIndex;
+                    modelPicker.open();
                 } else {
                     lastIndex = currentIndex;
                     selectedModelIndex = currentIndex;
@@ -69,6 +69,36 @@ Item {
                     meshData.path = modelData.path;
                 }
                 viewport.selectModel(meshData);
+            }
+
+            FileDialog {
+                id: modelPicker
+                selectFolder: false
+                selectMultiple: false
+
+                nameFilters: ["Wavefront OBJ Files (*.obj *.OBJ)"]
+
+                onSelectionAccepted: {
+                    var path = fileUrl.toString();
+                    if (path.indexOf("file://") == 0) {
+                        path = path.substring(7);
+                    }
+                    var name = path.substring(path.lastIndexOf("/")+1);
+
+                    var exists = false;
+                    for (var i = 0; i < meshModel.count-1 && !exists; i++) {
+                        var item = meshModel.get(i);
+                        if (item.path == path) {
+                            exists = true;
+                        }
+                    }
+
+                    if (!exists) {
+                        meshModel.insert(meshModel.count-1, { text: name, path: path });
+                    } else {
+                        console.log("model is already loaded");
+                    }
+                }
             }
         }
 
