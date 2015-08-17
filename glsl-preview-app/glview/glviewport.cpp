@@ -19,16 +19,17 @@ QQuickFramebufferObject::Renderer* GLViewport::createRenderer() const
 {
     GLViewRenderer *renderer = new GLViewRenderer();
 
-    connect(renderer, &GLViewRenderer::glVersionChanged, this, &GLViewport::changeGLVersion);
     connect(this, &GLViewport::uniformChanged, renderer, &GLViewRenderer::updateUniform);
     connect(this, &GLViewport::backgroundColorChanged, renderer, &GLViewRenderer::setBackgroundColor);
     connect(this, &GLViewport::programChanged, renderer, &GLViewRenderer::reloadProgram);
     connect(this, &GLViewport::modelSelected, renderer, &GLViewRenderer::selectModel);
-
     connect(this, &GLViewport::mouseMoved, renderer, &GLViewRenderer::rotate);
     connect(this, &GLViewport::mouseWheel, renderer, &GLViewRenderer::camMove);
 
+    connect(renderer, &GLViewRenderer::glVersionChanged, this, &GLViewport::changeGLVersion);
     connect(renderer, &GLViewRenderer::uniformsFound, this, &GLViewport::setUniforms);
+    connect(renderer, &GLViewRenderer::error, this, &GLViewport::errorDetected);
+    connect(renderer, &GLViewRenderer::message, this, &GLViewport::messageDetected);
 
     return renderer;
 }
@@ -120,7 +121,16 @@ void GLViewport::reloadProgram()
 void GLViewport::selectModel(const QVariantMap &modelInfo)
 {
     emit modelSelected(modelInfo);
-    //update();
+}
+
+void GLViewport::errorDetected(const QString &errorMsg)
+{
+    emit error(errorMsg);
+}
+
+void GLViewport::messageDetected(const QString &type, const QString &msg)
+{
+    emit message(type, msg);
 }
 
 

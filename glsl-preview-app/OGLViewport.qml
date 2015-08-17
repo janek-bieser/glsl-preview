@@ -6,21 +6,16 @@ import GLRendering 1.0
 
 Item {
 
+    id: root
     property alias uniformModel: viewport.uniformModel
 
-    Rectangle {
-        id: borderLeft
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        width: 1
-        color: "black"
-    }
+    signal error(string messageText);
+    signal info(string messageText);
 
     Rectangle {
         id: viewportTools
 
-        anchors.left: borderLeft.right
+        anchors.left: parent.left
         anchors.top: parent.top
         anchors.right: parent.right
 
@@ -105,7 +100,7 @@ Item {
     }
 
     Item {
-        anchors.left: borderLeft.right
+        anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: viewportTools.bottom
         anchors.bottom: parent.bottom
@@ -118,6 +113,13 @@ Item {
         GLViewport {
             id: viewport
             anchors.fill: parent
+            onMessage: {
+                if (type == "error") {
+                    root.error(messageText);
+                } else if (type == "info") {
+                    root.info(messageText);
+                }
+            }
         }
     }
 

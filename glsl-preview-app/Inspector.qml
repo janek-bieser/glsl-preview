@@ -13,6 +13,39 @@ Rectangle {
 
     color: "#e3e3e3"
 
+    property bool hidden: false
+
+    function toggleHidden() {
+        if (hidden) {
+            hidden = false;
+            root.state = "";
+        } else {
+            hidden = true;
+            root.state = "hidden"
+        }
+    }
+
+    states: [
+        State {
+            name: "hidden"
+            PropertyChanges {
+                target: root
+                width: 0
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            NumberAnimation {
+                duration: 150
+                easing.type: Easing.OutCubic
+                properties: "width"
+            }
+        }
+
+    ]
+
     SplitView {
 
         anchors.fill: parent
@@ -129,56 +162,8 @@ Rectangle {
 
         Item {
             height: 100
-
-            ScrollView {
+            ShaderBuiltins {
                 anchors.fill: parent
-
-                ListView {
-                    model: ListModel {
-                        ListElement { name: "slp_Vertex (location=0)"; type: "vec3"; category: "Attributes" }
-                        ListElement { name: "slp_Normal (location=1)"; type: "vec3"; category: "Attributes" }
-                        ListElement { name: "slp_TexCoords (location=2)"; type: "vec2"; category: "Attributes" }
-
-                        ListElement { name: "slp_ModelMatrix"; type: "mat4"; category: "Uniforms" }
-                        ListElement { name: "slp_ViewMatrix"; type: "mat4"; category: "Uniforms" }
-                        ListElement { name: "slp_ProjectionMatrix"; type: "mat4"; category: "Uniforms" }
-                        ListElement { name: "slp_MVPMatrix"; type: "mat4"; category: "Uniforms" }
-                        ListElement { name: "slp_NormalMatrix"; type: "mat3"; category: "Uniforms" }
-                    }
-
-                    delegate: Item {
-                        height: 20
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.margins: 12
-
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: name
-                        }
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.right: parent.right
-                            text: type
-                            color: "#326545"
-                        }
-                    }
-
-                    section.property: "category"
-                    section.delegate: Item {
-                        height: 28
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.margins: 12
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: section
-                            font.bold: true
-                            font.pointSize: 14
-                        }
-                    }
-
-                }
             }
         }
     }

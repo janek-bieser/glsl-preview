@@ -223,6 +223,7 @@ void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
     QString vLog = vertexShader.log();
     if (vLog.size() > 0) {
         qDebug() << vLog;
+        emit message("error", "Vertex Shader : " + vLog);
     }
 
     QOpenGLShader fragmentShader(QOpenGLShader::Fragment);
@@ -230,6 +231,7 @@ void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
     QString fLog = fragmentShader.log();
     if (fLog.size() > 0) {
         qDebug() << fLog;
+        emit message("error", "Fragment Shader : " + fLog);
     }
 
     if (m_program != nullptr) {
@@ -244,6 +246,7 @@ void GLViewRenderer::loadShader(const QString& vertex, const QString& fragment)
     QString progLog = m_program->log();
     if (progLog.size() > 0) {
         qDebug() << progLog;
+        emit message("error", progLog);
     }
 }
 

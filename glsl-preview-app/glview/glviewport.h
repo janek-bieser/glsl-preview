@@ -34,6 +34,8 @@ public slots:
     void setUniforms(const QList<ShaderUniform*>& uniforms);
     void reloadProgram();
     void selectModel(const QVariantMap& modelInfo);
+    void errorDetected(const QString& errorMsg);
+    void messageDetected(const QString& type, const QString& message);
 
 signals:
     void glVersionChanged() const;
@@ -42,6 +44,8 @@ signals:
     void uniformModelChanged() const;
     void programChanged() const;
     void modelSelected(const QVariantMap& modelInfo) const;
+    void error(const QString& errorMsg) const;
+    void message(const QString& type, const QString& messageText) const;
 
     void mouseMoved(const QPointF& point) const;
     void mouseWheel(qreal delta) const;

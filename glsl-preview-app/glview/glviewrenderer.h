@@ -36,6 +36,8 @@ public slots:
 signals:
     void glVersionChanged(const QString& version);
     void backgroundColorChanged(QColor color);
+    void error(const QString& error);
+    void message(const QString& type, const QString& message);
 
     void uniformsFound(const QList<ShaderUniform*>& uniform);
     void uniformParsingCompleted();

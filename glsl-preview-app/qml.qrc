@@ -18,6 +18,7 @@
         <file>Sampler2DDelegate.qml</file>
         <file>Sampler2DInput.qml</file>
         <file>UniformCache.js</file>
+        <file>ShaderBuiltins.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="triangle.svg">images/triangle.svg</file>
