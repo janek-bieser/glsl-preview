@@ -37,6 +37,7 @@ Item {
         }
 
         ComboBox {
+            id: modelComboBox
             property int lastIndex: 0
             property int selectedModelIndex: 0
 
@@ -53,7 +54,6 @@ Item {
 
             onCurrentIndexChanged: {
                 if (currentIndex == meshModel.count-1) {
-                    console.log("load custom model");
                     currentIndex = lastIndex;
                     modelPicker.open();
                 } else {
@@ -95,6 +95,8 @@ Item {
 
                     if (!exists) {
                         meshModel.insert(meshModel.count-1, { text: name, path: path });
+                        //modelComboBox.selectedModelIndex(meshModel.count-1);
+                        modelComboBox.currentIndex = meshModel.count-2;
                     } else {
                         console.log("model is already loaded");
                     }

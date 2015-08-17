@@ -23,7 +23,7 @@ Sampler2DUniformCache::Sampler2DUniformCache(const Sampler2DUniformCache &other)
     m_imgSrc = other.m_imgSrc;
     m_location = other.m_location;
     m_imgData = nullptr;
-    m_slot = curTexSlot++;
+    m_slot = curTexSlot;
     reloadTexture();
 }
 
