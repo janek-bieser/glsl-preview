@@ -28,6 +28,7 @@ void OBJModel::render()
 {
     glBindVertexArray(m_vertexArray);
     glDrawElements(GL_TRIANGLES, m_elementCount, GL_UNSIGNED_SHORT, (void*)0);
+    glBindVertexArray(0);
 }
 
 void DebugBufferArrayBuffer()

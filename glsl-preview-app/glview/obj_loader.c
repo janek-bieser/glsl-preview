@@ -230,7 +230,6 @@ CreateMesh(FILE* obj_file, obj_info_t file_info)
 {
     obj_vertex_t tmpVertices[file_info.vcount];
     obj_vertex_t tmpNormals[file_info.ncount];
-    printf("tcount: %d\n", file_info.tcount);
     obj_tex_coord_t tmpUVs[file_info.tcount];
     char line[128];
 

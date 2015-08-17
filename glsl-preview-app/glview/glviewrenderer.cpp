@@ -25,10 +25,10 @@ GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
     m_backgroundRenderable = NULL;
     m_camZPos = 0.8;
 
-    m_vertexSource = "/Users/janekbieser/Desktop/shader_test/shader.vs";
-    m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/shader.fs";
-    //m_vertexSource = "/Users/janekbieser/Desktop/shader_test/simple.vs";
-    //m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/simple.fs";
+    //m_vertexSource = "/Users/janekbieser/Desktop/shader_test/shader.vs";
+    //m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/shader.fs";
+    m_vertexSource = "/Users/janekbieser/Desktop/shader_test/simple.vs";
+    m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/simple.fs";
 }
 
 GLViewRenderer::~GLViewRenderer()

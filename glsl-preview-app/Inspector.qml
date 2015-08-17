@@ -143,8 +143,7 @@ Rectangle {
                         ListElement { name: "slp_ViewMatrix"; type: "mat4"; category: "Uniforms" }
                         ListElement { name: "slp_ProjectionMatrix"; type: "mat4"; category: "Uniforms" }
                         ListElement { name: "slp_MVPMatrix"; type: "mat4"; category: "Uniforms" }
-
-                        ListElement { name: "slp_NormalMatrix"; type: "mat4"; category: "Uniforms" }
+                        ListElement { name: "slp_NormalMatrix"; type: "mat3"; category: "Uniforms" }
                     }
 
                     delegate: Item {
