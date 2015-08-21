@@ -272,8 +272,6 @@ void GLViewRenderer::compileProgram()
     vertexShader.compileSourceFile(m_vertexSource);
     QString vLog = vertexShader.log();
     if (vLog.size() > 0) {
-        qDebug() << vLog;
-        //emit message("error", "Vertex Shader : " + vLog);
         Logger::error("Vertex Shader : " + vLog);
     }
 
@@ -281,8 +279,6 @@ void GLViewRenderer::compileProgram()
     fragmentShader.compileSourceFile(m_fragmentSource);
     QString fLog = fragmentShader.log();
     if (fLog.size() > 0) {
-        qDebug() << fLog;
-        //emit message("error", "Fragment Shader : " + fLog);
         Logger::error("Fragment Shader : " + fLog);
     }
 
@@ -297,8 +293,6 @@ void GLViewRenderer::compileProgram()
 
     QString progLog = m_program->log();
     if (progLog.size() > 0) {
-        qDebug() << progLog;
-        //emit message("error", progLog);
         Logger::error(progLog);
     }
 }

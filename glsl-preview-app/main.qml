@@ -253,7 +253,10 @@ ApplicationWindow {
                 textFormat: TextEdit.RichText
                 backgroundVisible: true
                 readOnly: true
+
                 textColor: "#222"
+                font.family: "Monaco"
+                font.pointSize: 11
 
                 Connections {
                     target: Logger
@@ -269,13 +272,13 @@ ApplicationWindow {
                 }
 
                 function appendError(msg) {
-                    var fullMsg = "<p style='margin: 2 0;'><span style='color: red;'>Error :</span> " +
+                    var fullMsg = "<p style='margin: 2 0;'><span style='color: red;'>Error:</span> " +
                             msg + "</p>";
                     debugConsole.append(fullMsg);
                 }
 
                 function appendInfo(msg) {
-                    debugConsole.append("<p style='margin: 2 0;'><span style='color: #385;'>Info :</span> " + msg + "</p>");
+                    debugConsole.append("<p style='margin: 2 0;'><span style='color: #385;'>Info:</span> " + msg + "</p>");
                 }
             }
         }
