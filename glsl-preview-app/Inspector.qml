@@ -14,12 +14,15 @@ Rectangle {
     color: "#e3e3e3"
 
     property bool hidden: false
+    Layout.maximumWidth: 500
 
     function toggleHidden() {
         if (hidden) {
             hidden = false;
+            root.visible = true;
             root.state = "";
         } else {
+            root.Layout.minimumWidth = 0;
             hidden = true;
             root.state = "hidden"
         }
@@ -41,6 +44,13 @@ Rectangle {
                 duration: 150
                 easing.type: Easing.OutCubic
                 properties: "width"
+            }
+            onRunningChanged: {
+                if (state == "" && !running) {
+                    root.Layout.minimumWidth = 375;
+                } else if (state == "hidden" && !running) {
+                    root.visible = false;
+                }
             }
         }
 
@@ -110,6 +120,8 @@ Rectangle {
                 id: inspectorDelegate
                 Loader {
                     property variant modelData: uniformList.model.get(index)
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     sourceComponent: {
                         if (/^vec(2|3)$/.test(type)) {
                             return vecComponent;

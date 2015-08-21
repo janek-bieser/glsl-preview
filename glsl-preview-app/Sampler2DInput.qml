@@ -65,12 +65,10 @@ RowLayout {
         nameFilters: ["Image Files (*.png *.PNG)"]
 
         onSelectionAccepted: {
+            var img = fileUrl.toString();
             var path = img.substring(7, img.length);
-            root.imgSource = img.substring(7, img.length);
+            imgPathInput.text = path;
+            root.imgSource = path;
         }
-    }
-
-    onImgSourceChanged: {
-        imgPathInput.text = imgSource;
     }
 }

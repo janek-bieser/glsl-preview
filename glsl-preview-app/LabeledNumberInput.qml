@@ -12,6 +12,7 @@ Item {
     implicitHeight: numInput.implicitHeight
 
     Layout.minimumWidth: 80
+    Layout.alignment: Qt.AlignHCenter
 
     Label {
         id: lbl;

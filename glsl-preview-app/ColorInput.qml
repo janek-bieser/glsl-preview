@@ -14,6 +14,9 @@ ColumnLayout {
         numOfComponents: 4
         vecLabels: ["r", "g", "b", "a"]
 
+        anchors.left: parent.left
+        anchors.right: parent.right
+
         minValue: 0
         maxValue: 1
 
@@ -27,7 +30,8 @@ ColumnLayout {
     ColorPicker {
         id: picker
 
-        width: 350
+        anchors.left: parent.left
+        anchors.right: parent.right
         height: 24
 
         onColorChanged: {

@@ -6,6 +6,9 @@ Rectangle {
 
     property var uniformCache
 
+    anchors.left: parent.left
+    anchors.right: parent.right
+
     Sampler2DInput {
         id: imgInput
         label: modelData.name

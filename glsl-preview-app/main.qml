@@ -60,7 +60,14 @@ ApplicationWindow {
             MenuSeparator {}
             MenuItem {
                 text: shaderInspector.hidden ? qsTr("&Show Inspector") : qsTr("&Hide Inspector")
-                onTriggered: shaderInspector.toggleHidden()
+                onTriggered: {
+                    //var newMinWidth = 0;
+                    //if (shaderInspector.hidden) {
+                    //    newMinWidth = 375
+                    //}
+                    //shaderInspector.Layout.minimumWidth = newMinWidth;
+                    shaderInspector.toggleHidden()
+                }
                 shortcut: "Ctrl+i"
             }
             MenuItem {
@@ -152,148 +159,141 @@ ApplicationWindow {
 
     }
 
-    Inspector {
-        id: shaderInspector
-
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-
-        width: 375
-
-        uniformModel: glViewport.uniformModel
-
-        onUniformChanged: {
-            glViewport.updateUniform(uniform);
-        }
-    }
-
-    Rectangle {
-        id: divider
-        color: "black"
-        width: 1
-        anchors.left: shaderInspector.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-    }
-
     SplitView {
 
-        orientation: Qt.Vertical
+        id: rootSplitView
 
-        anchors.left: divider.right
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.fill: parent
 
-        handleDelegate: Rectangle {
-            id: viewportConsoleDivider
-            height: 12
-            color: "#d5d5d5"
+        Inspector {
+            id: shaderInspector
 
-            border.width: 1
-            border.color: "#646464"
-            anchors.margins: -1
             anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+
+            Layout.minimumWidth: 375
+
+            uniformModel: glViewport.uniformModel
+
+            onUniformChanged: {
+                glViewport.updateUniform(uniform);
+            }
         }
 
+        SplitView {
 
-        OGLViewport {
-            id: glViewport
+            orientation: Qt.Vertical
 
-            Layout.fillHeight: true
-            Layout.minimumHeight: 100
+            handleDelegate: Rectangle {
+                id: viewportConsoleDivider
+                height: 12
+                color: "#d5d5d5"
 
-            anchors.left: parent.left
-            anchors.right: parent.right
-        }
-
-        Item {
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            id: consoleContainer
-            property real _goalHeight: 0
-            property real _lastHeight: 100
-            property bool hidden: height == 0
-
-            function toggleHidden() {
-                if (height > 0) {
-                    _lastHeight = height;
-                    _goalHeight = 0;
-                } else {
-                    _goalHeight = _lastHeight >= 100 ? _lastHeight : 100;
-                }
-
-                anim.start();
-            }
-
-            function show() {
-                if (hidden) {
-                    toggleHidden();
-                }
-            }
-
-            transitions: [
-                Transition {
-                    NumberAnimation {
-                        duration: 150
-                        easing.type: Easing.OutCubic
-                        properties: "height"
-                    }
-                }
-
-            ]
-
-            NumberAnimation on height {
-                id: anim
-                running: false
-                from: consoleContainer.height
-                to: consoleContainer._goalHeight
-                duration: 220
-                easing.type: Easing.InOutQuad
-            }
-
-            TextArea {
-                id: debugConsole
-
-                anchors.fill: parent
+                border.width: 1
+                border.color: "#646464"
                 anchors.margins: -1
-                textMargin: 8
-                textFormat: TextEdit.RichText
-                backgroundVisible: true
-                readOnly: true
+                anchors.left: parent.left
+                anchors.right: parent.right
+            }
 
-                textColor: "#222"
-                font.family: "Monaco"
-                font.pointSize: 11
 
-                Connections {
-                    target: Logger
+            OGLViewport {
+                id: glViewport
 
-                    onErrorMessage: {
-                        debugConsole.appendError(message);
-                        consoleContainer.show();
+                Layout.fillHeight: true
+                Layout.minimumHeight: 100
+
+                //anchors.left: parent.left
+                //anchors.right: parent.right
+            }
+
+            Item {
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                id: consoleContainer
+                property real _goalHeight: 0
+                property real _lastHeight: 100
+                property bool hidden: height == 0
+
+                function toggleHidden() {
+                    if (height > 0) {
+                        _lastHeight = height;
+                        _goalHeight = 0;
+                    } else {
+                        _goalHeight = _lastHeight >= 100 ? _lastHeight : 100;
                     }
 
-                    onInfoMessage: {
-                        debugConsole.appendInfo(message);
+                    anim.start();
+                }
+
+                function show() {
+                    if (hidden) {
+                        toggleHidden();
                     }
                 }
 
-                function appendError(msg) {
-                    var fullMsg = "<p style='margin: 2 0;'><span style='color: red;'>Error:</span> " +
-                            msg + "</p>";
-                    debugConsole.append(fullMsg);
+                transitions: [
+                    Transition {
+                        NumberAnimation {
+                            duration: 150
+                            easing.type: Easing.OutCubic
+                            properties: "height"
+                        }
+                    }
+
+                ]
+
+                NumberAnimation on height {
+                    id: anim
+                    running: false
+                    from: consoleContainer.height
+                    to: consoleContainer._goalHeight
+                    duration: 220
+                    easing.type: Easing.InOutQuad
                 }
 
-                function appendInfo(msg) {
-                    debugConsole.append("<p style='margin: 2 0;'><span style='color: #385;'>Info:</span> " + msg + "</p>");
+                TextArea {
+                    id: debugConsole
+
+                    anchors.fill: parent
+                    anchors.margins: -1
+                    textMargin: 8
+                    textFormat: TextEdit.RichText
+                    backgroundVisible: true
+                    readOnly: true
+
+                    textColor: "#222"
+                    font.family: "Monaco"
+                    font.pointSize: 11
+
+                    Connections {
+                        target: Logger
+
+                        onErrorMessage: {
+                            debugConsole.appendError(message);
+                            consoleContainer.show();
+                        }
+
+                        onInfoMessage: {
+                            debugConsole.appendInfo(message);
+                        }
+                    }
+
+                    function appendError(msg) {
+                        var fullMsg = "<p style='margin: 2 0;'><span style='color: red;'>Error:</span> " +
+                                msg + "</p>";
+                        debugConsole.append(fullMsg);
+                    }
+
+                    function appendInfo(msg) {
+                        debugConsole.append("<p style='margin: 2 0;'><span style='color: #385;'>Info:</span> " + msg + "</p>");
+                    }
                 }
             }
-        }
 
+        }
     }
 
 }

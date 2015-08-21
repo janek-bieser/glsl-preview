@@ -21,11 +21,13 @@ ColumnLayout {
     Label {
         id: lbl
         text: "Vector"
-        //font.bold: true
     }
 
     VectorInput {
         id: vecInput
+        anchors.left: parent.left
+        anchors.right: parent.right
+
         onValueChanged: {
             root.valueChanged();
         }
