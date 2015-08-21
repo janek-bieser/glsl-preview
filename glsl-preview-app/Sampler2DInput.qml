@@ -66,11 +66,16 @@ RowLayout {
 
         onSelectionAccepted: {
             var img = fileUrl.toString();
-            root.imgSource = img.substring(7, img.length);
+            //console.log(img.length, img);
+
+            var path = img.substring(7, img.length);
+            imgPathInput.text = path;
+            imgSource = path;
+            //root.imgSource = img.substring(7, img.length);
         }
     }
 
-    onImgSourceChanged: {
-        imgPathInput.text = imgSource;
-    }
+    //onImgSourceChanged: {
+    //    imgPathInput.text = imgSource;
+    //}
 }

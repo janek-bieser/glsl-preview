@@ -1,5 +1,6 @@
 #include "glviewport.h"
 #include "glviewrenderer.h"
+#include "logger.h"
 
 #include <QThread>
 

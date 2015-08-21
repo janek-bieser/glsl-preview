@@ -196,26 +196,6 @@ ApplicationWindow {
 
             anchors.left: parent.left
             anchors.right: parent.right
-
-            onError: {
-                debugConsole.appendError(messageText);
-                consoleContainer.show();
-            }
-
-            onInfo: {
-                debugConsole.appendInfo(messageText);
-            }
-
-            //ShaderSelectionMenu {
-            //    id: shaderMenu
-            //    anchors.centerIn: glViewport
-
-            //    radius: 5
-
-            //    onFilesSelected: {
-            //        glViewport.loadShader(sources);
-            //    }
-            //}
         }
 
         Item {
@@ -274,6 +254,19 @@ ApplicationWindow {
                 backgroundVisible: true
                 readOnly: true
                 textColor: "#222"
+
+                Connections {
+                    target: Logger
+
+                    onErrorMessage: {
+                        debugConsole.appendError(message);
+                        consoleContainer.show();
+                    }
+
+                    onInfoMessage: {
+                        debugConsole.appendInfo(message);
+                    }
+                }
 
                 function appendError(msg) {
                     var fullMsg = "<p style='margin: 2 0;'><span style='color: red;'>Error :</span> " +

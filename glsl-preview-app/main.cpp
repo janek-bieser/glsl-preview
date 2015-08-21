@@ -1,9 +1,11 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QSurfaceFormat>
 #include <QQuickWindow>
 
 #include "glview/glviewport.h"
+#include "glview/logger.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +23,12 @@ int main(int argc, char *argv[])
     format.setDepthBufferSize(24);
     format.setStencilBufferSize(8);
 
+
     QQmlApplicationEngine engine;
+
+    //Logger& logger = Logger::instance();
+    engine.rootContext()->setContextProperty("Logger", &Logger::instance());
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     QQuickWindow* window = qobject_cast<QQuickWindow*>(engine.rootObjects().first());

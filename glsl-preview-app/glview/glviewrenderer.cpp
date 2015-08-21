@@ -16,6 +16,7 @@
 #include "ucache/vecuniformcache.h"
 #include "ucache/sampler2duniformcache.h"
 #include "shaders/shaderlibrary.h"
+#include "logger.h"
 
 GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
 {
@@ -190,6 +191,7 @@ void GLViewRenderer::updateUniform(const QVariantMap& uniform)
                 m_uniformCache[name] = tmp;
             } else if (type == "sampler2D") {
                 Sampler2DUniformCache* tmp = new Sampler2DUniformCache(loc, values[0].toString());
+                qDebug() << "Update Texture:" << values[0].toString();
                 m_uniformCache[name] = tmp;
             }
 
@@ -271,7 +273,8 @@ void GLViewRenderer::compileProgram()
     QString vLog = vertexShader.log();
     if (vLog.size() > 0) {
         qDebug() << vLog;
-        emit message("error", "Vertex Shader : " + vLog);
+        //emit message("error", "Vertex Shader : " + vLog);
+        Logger::error("Vertex Shader : " + vLog);
     }
 
     QOpenGLShader fragmentShader(QOpenGLShader::Fragment);
@@ -279,7 +282,8 @@ void GLViewRenderer::compileProgram()
     QString fLog = fragmentShader.log();
     if (fLog.size() > 0) {
         qDebug() << fLog;
-        emit message("error", "Fragment Shader : " + fLog);
+        //emit message("error", "Fragment Shader : " + fLog);
+        Logger::error("Fragment Shader : " + fLog);
     }
 
     if (m_program != nullptr) {
@@ -294,7 +298,8 @@ void GLViewRenderer::compileProgram()
     QString progLog = m_program->log();
     if (progLog.size() > 0) {
         qDebug() << progLog;
-        emit message("error", progLog);
+        //emit message("error", progLog);
+        Logger::error(progLog);
     }
 }
 

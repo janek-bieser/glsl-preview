@@ -4,7 +4,7 @@ QT += qml quick widgets
 
 CONFIG += c++11
 
-TARGET = "GLSL Preview"
+TARGET = "GLSL Preview"
 ICON = "glsl-preview.icns"
 
 SOURCES += main.cpp \
@@ -18,7 +18,9 @@ SOURCES += main.cpp \
     glview/ucache/vecuniformcache.cpp \
     glview/ucache/sampler2duniformcache.cpp \
     glview/obj_loader.c \
-    glview/renderables/objmodel.cpp
+    glview/renderables/objmodel.cpp \
+    glview/logger.cpp \
+    glview/texturecache.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,6 +31,9 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 INCLUDEPATH += glm
+INCLUDEPATH += /usr/local/Cellar/freeimage/3.17.0/include
+
+LIBS += -L/usr/local/Cellar/freeimage/3.17.0/lib -lfreeimage
 
 HEADERS += \
     glview/glviewport.h \
@@ -46,4 +51,6 @@ HEADERS += \
     glview/ucache/sampler2duniformcache.h \
     glview/ucache/stb_image.h \
     glview/obj_loader.h \
-    glview/renderables/objmodel.h
+    glview/renderables/objmodel.h \
+    glview/logger.h \
+    glview/texturecache.h
