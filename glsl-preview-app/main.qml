@@ -105,12 +105,12 @@ ApplicationWindow {
         contentItem: Rectangle {
             anchors.fill: parent
             color: "#eee"
-            implicitWidth: 280
-            implicitHeight: 340
+            implicitWidth: 300
+            implicitHeight: 480
 
             Item {
                 width: parent.implicitWidth
-                height: parent.implicitHeight
+                height: parent.implicitHeight - 80
                 anchors.centerIn: parent
                 Image {
                     id: aboutImg
@@ -119,7 +119,7 @@ ApplicationWindow {
                     height: 128
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
-                    anchors.topMargin: 20
+                    //anchors.topMargin: 0
                 }
 
                 Label {
@@ -130,15 +130,26 @@ ApplicationWindow {
                     anchors.top: aboutImg.bottom
                 }
 
-                Label {
+                Text {
                     anchors.top: aboutTitle.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.topMargin: 24
                     textFormat: TextEdit.RichText
                     text: "<div style='text-align: center'><p>Concept<br/>Design<br/>Programming</p><p>by</p><p><strong>Janek Bieser</strong><br/>j.bieser@fh-bingen.de</p></div>"
                 }
+
+            }
+
+            TextArea {
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.margins: 20
+                height: 80
+                text: "This software uses the FreeImage open source image library. See http://freeimage.sourceforge.net for details. FreeImage is used under the (GNU GPL or FIPL), version (license version)."
             }
         }
+
     }
 
     Inspector {
