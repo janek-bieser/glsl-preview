@@ -70,7 +70,6 @@ void ShaderUniformList::clear()
         m_uniforms.pop_back();
         endRemoveRows();
     }
-    qDebug() << "Uniform Count" << m_uniforms.count();
 }
 
 // -----------------------------------------------------------------------------

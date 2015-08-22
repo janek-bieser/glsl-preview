@@ -22,6 +22,10 @@ Rectangle {
             uniformCache.setValue(modelData.name, {value: imgSource, type: "sampler2D"});
             root.uniformChanged({name: modelData.name, values: values, type: "sampler2D"});
         }
+        onReloadTexture: {
+            var values = [imgSource];
+            root.uniformChanged({name: modelData.name, values: values, type: "sampler2D"});
+        }
     }
 
     Rectangle {

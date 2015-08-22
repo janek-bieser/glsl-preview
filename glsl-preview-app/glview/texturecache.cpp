@@ -28,15 +28,16 @@ static TextureCache::TextureInfo GetNextTextureInof()
 
 void TextureCache::LoadTexture(const QString &imgpath)
 {
+
     if (cache.contains(imgpath)) {
-        Logger::info("Using cached texture for: " + imgpath);
+        Logger::info("Using cached texture: " + imgpath);
         return;
     }
 
-    qDebug() << availableSlots.size();
+    //qDebug() << cache.size();
 
     if (availableSlots.size() == 0) {
-        Logger::error("Full Texture Cache. Cannot load: " + imgpath);
+        Logger::error("Full Texture Cache. Cannot load " + imgpath);
         return;
     }
 
@@ -77,10 +78,28 @@ void TextureCache::LoadTexture(const QString &imgpath)
     glActiveTexture(GL_TEXTURE0);
 }
 
+void TextureCache::Reloadtexture(const QString& imgpath)
+{
+    TextureCache::UnloadTexture(imgpath);
+    TextureCache::LoadTexture(imgpath);
+}
+
+void TextureCache::UnloadTexture(const QString& imgpath)
+{
+    if (!cache.contains(imgpath)) {
+        return;
+    }
+
+    TextureInfo info = cache[imgpath];
+    glDeleteTextures(1, &info.texId);
+    availableSlots.push(info.slot);
+    cache.remove(imgpath);
+}
+
 void TextureCache::BindTexture(const QString &imgpath, GLuint location)
 {
     if (!cache.contains(imgpath)) {
-        Logger::error("Cannot bind texture: " + imgpath);
+        //Logger::error("Cannot bind texture: " + imgpath);
         return;
     }
 

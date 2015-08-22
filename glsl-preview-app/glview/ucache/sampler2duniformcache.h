@@ -20,9 +20,6 @@ public:
 
 private:
     QString m_imgSrc;
-
-private:
-    void reloadTexture();
 };
 
 

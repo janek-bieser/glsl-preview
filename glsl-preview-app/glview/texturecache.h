@@ -14,6 +14,8 @@ public:
     };
 
     static void LoadTexture(const QString& imgpath);
+    static void Reloadtexture(const QString& imgpath);
+    static void UnloadTexture(const QString& imgpath);
     static void BindTexture(const QString& imgpath, GLuint location);
 
 private:

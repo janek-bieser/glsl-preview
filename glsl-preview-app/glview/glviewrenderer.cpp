@@ -190,8 +190,7 @@ void GLViewRenderer::updateUniform(const QVariantMap& uniform)
                 VecUniformCache* tmp = new VecUniformCache(loc, valuesLen);
                 m_uniformCache[name] = tmp;
             } else if (type == "sampler2D") {
-                Sampler2DUniformCache* tmp = new Sampler2DUniformCache(loc, values[0].toString());
-                qDebug() << "Update Texture:" << values[0].toString();
+                Sampler2DUniformCache* tmp = new Sampler2DUniformCache(loc);
                 m_uniformCache[name] = tmp;
             }
 
@@ -380,7 +379,6 @@ void GLViewRenderer::parseUniforms()
     if (foundUniforms.size() > 0) {
         updateUniformCache(foundUniforms);
         emit uniformsFound(foundUniforms);
-        qDebug() << "After emit found uniforms";
     }
 }
 
