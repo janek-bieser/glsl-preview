@@ -33,7 +33,7 @@ ApplicationWindow {
         Menu {
             title: qsTr("&File")
             MenuItem {
-                text: qsTr("&Open Shader...")
+                text: qsTr("&Open Shader…")
                 onTriggered: {
                     shaderDialog.open();
                 }

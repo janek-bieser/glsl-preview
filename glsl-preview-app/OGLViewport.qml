@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls.Styles 1.2
 
 import GLRendering 1.0
 import "styles"
@@ -44,7 +45,27 @@ Item {
             property int lastIndex: 0
             property int selectedModelIndex: 0
 
-            //style: SLPComboBoxStyle{}
+            style: ComboBoxStyle {
+                background: Rectangle {
+                    implicitWidth: 120
+                    implicitHeight: 18
+                    color: "#495868"
+                    TriangleIcon {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.rightMargin: 5
+                        width: 10
+                        height: width
+                        flipped: true
+                    }
+                }
+                label: Label {
+                    id: _boxLbl
+                    font.pointSize: 11
+                    color: "#d6d6d6"
+                    text: control.currentText.length < 17 ? control.currentText :  control.currentText.substring(0, 14) + "…";
+                }
+            }
 
             anchors.left: modelLbl.right
             anchors.verticalCenter: parent.verticalCenter
@@ -54,7 +75,7 @@ Item {
                 id: meshModel
                 ListElement { text: "Plane" }
                 ListElement { text: "Cube" }
-                ListElement { text: "Load Custom..." }
+                ListElement { text: "Load Custom…" }
             }
 
             onCurrentIndexChanged: {
