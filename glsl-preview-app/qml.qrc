@@ -24,7 +24,6 @@
         <file>styles/SLPTextFieldStyle.qml</file>
         <file>styles/SLPScrollViewStyle.qml</file>
         <file>styles/SLPTextAreaStyle.qml</file>
-        <file>styles/SLPComboBoxStyle.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="triangle.svg">images/triangle.svg</file>
