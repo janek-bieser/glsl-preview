@@ -3,6 +3,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
 import "UniformCache.js" as UniformCache
+import "styles"
 
 Rectangle {
     property alias uniformModel: uniformList.model
@@ -11,7 +12,7 @@ Rectangle {
 
     id: root
 
-    color: "#e3e3e3"
+    color: "#343C44"
 
     property bool hidden: false
     Layout.maximumWidth: 500
@@ -63,10 +64,8 @@ Rectangle {
 
         handleDelegate: Rectangle {
             height: 28
-            color: "#d5d5d5"
+            color: "#2a3137"
 
-            border.width: 1
-            anchors.margins: -1
             anchors.left: parent.left
             anchors.right: parent.right
 
@@ -74,6 +73,7 @@ Rectangle {
                 anchors.centerIn: parent
                 text: "Builtins"
                 font.pointSize: 16
+                color: "#b4b4b4"
             }
         }
 
@@ -89,15 +89,13 @@ Rectangle {
                 anchors.top: parent.top
                 height: 36
 
-                border.width: 1
-                anchors.margins: -1
-
-                color: "#d5d5d5"
+                color: "#2a3137"
 
                 Text {
                     anchors.centerIn: parent
                     text: "Uniform Inspector"
                     font.pointSize: 16
+                    color: "#b4b4b4"
                 }
             }
 
@@ -152,6 +150,8 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
                 anchors.top: uniformsHeader.bottom
+
+                style: SLPScrollViewStyle{}
 
                 ListView {
                     id: uniformList

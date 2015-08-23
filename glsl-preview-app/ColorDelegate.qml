@@ -1,9 +1,8 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
-Rectangle {
-    color: "#f3f3f3"
-    height: 112
+Item {
+    height: 108
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -29,7 +28,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         height: 1
-        color: "#999"
+        color: "#2a3137"
     }
 
     function readCachedValue() {

@@ -21,6 +21,7 @@ ColumnLayout {
     Label {
         id: lbl
         text: "Vector"
+        color: "#d6d6d6"
     }
 
     VectorInput {

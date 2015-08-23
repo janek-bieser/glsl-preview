@@ -2,8 +2,11 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
+import "styles"
+
 ScrollView {
-    //anchors.fill: parent
+
+    style: SLPScrollViewStyle{}
 
     ListView {
         model: ListModel {
@@ -27,12 +30,13 @@ ScrollView {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 text: name
+                color: "#d6d6d6"
             }
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 text: type
-                color: "#326545"
+                color: "#94b3d3"
             }
         }
 
@@ -47,6 +51,7 @@ ScrollView {
                 text: section
                 font.bold: true
                 font.pointSize: 14
+                color: "#d6d6d6"
             }
         }
 

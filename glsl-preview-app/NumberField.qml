@@ -2,6 +2,8 @@ import QtQuick 2.5
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.2
 
+import "styles"
+
 TextField {
     id: root
     property real value: 0
@@ -33,16 +35,7 @@ TextField {
         root.value = tmp;
     }
 
-    style: TextFieldStyle {
-        textColor: "#111"
-        background: Rectangle {
-            radius: 5
-            implicitWidth: 100
-            implicitHeight: 22
-            border.width: 1
-            border.color: "#555"
-        }
-    }
+    style: SLPTextFieldStyle{}
 
     function validateValue(v) {
         if (v > maxValue) {

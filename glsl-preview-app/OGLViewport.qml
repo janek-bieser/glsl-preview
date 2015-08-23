@@ -3,6 +3,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 
 import GLRendering 1.0
+import "styles"
 
 Item {
 
@@ -20,17 +21,19 @@ Item {
         anchors.right: parent.right
 
         border.width: 1
+        border.color: "#1F2429"
         anchors.topMargin: -1
         anchors.rightMargin: -1
         anchors.leftMargin: -1
 
         height: 36
 
-        color: "#f3f3f3"
+        color: "#343c44"
 
         Label {
             id: modelLbl
             text: "Model"
+            color: "#d6d6d6"
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 12
@@ -40,6 +43,8 @@ Item {
             id: modelComboBox
             property int lastIndex: 0
             property int selectedModelIndex: 0
+
+            //style: SLPComboBoxStyle{}
 
             anchors.left: modelLbl.right
             anchors.verticalCenter: parent.verticalCenter
@@ -109,6 +114,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 5
             text: "Background Color"
+            color: "#d6d6d6"
         }
 
         Rectangle {
@@ -119,6 +125,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 12
             border.width: 1
+            border.color: "#2a3137"
             color: "black"
 
             MouseArea {

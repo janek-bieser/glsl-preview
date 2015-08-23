@@ -17,6 +17,7 @@ Item {
     Label {
         id: lbl;
         text: label
+        color: "#d6d6d6"
         anchors.verticalCenter: parent.verticalCenter
     }
 

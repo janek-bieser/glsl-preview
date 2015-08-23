@@ -18,7 +18,7 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        width: 10
+        width: 9
 
         TriangleIcon {
             anchors.left: parent.left
@@ -33,6 +33,15 @@ Item {
             anchors.bottom: parent.bottom
             height: parent.height / 2 - 1
             flipped: true
+        }
+
+        Rectangle {
+            width: 3
+            height: 3
+            radius: 2
+            color: "#4a5259"
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: 8.5
         }
 
         MouseArea {
@@ -62,7 +71,7 @@ Item {
 
         anchors.left: parent.left
         anchors.right: controlls.left
-        anchors.rightMargin: 2
+        anchors.rightMargin: 4
         anchors.verticalCenter: parent.verticalCenter
 
         Keys.onUpPressed: (event.modifiers & Qt.ShiftModifier) ? _numberInput.addAmount(10) : _numberInput.addAmount(1)

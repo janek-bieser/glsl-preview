@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.2
 
+import "styles"
+
 RowLayout {
 
     property alias label: lbl.text
@@ -17,9 +19,11 @@ RowLayout {
     ColumnLayout {
 
         Layout.fillWidth: true
+        spacing: 6
 
         Label {
             id: lbl
+            color: "#d6d6d6"
         }
 
         RowLayout {
@@ -29,6 +33,8 @@ RowLayout {
             TextField {
                 id: imgPathInput
                 Layout.fillWidth: true
+
+                style: SLPTextFieldStyle{}
 
                 onAccepted: {
                     if (root.imgSource == text) {
@@ -41,17 +47,26 @@ RowLayout {
                     }
                 }
             }
+
+        }
+
+        Button {
+            text: qsTr("Select");
+            onClicked: _fileDialog.open()
+            implicitWidth: 80
+            style: SLPButtonStyle{}
         }
     }
 
     Rectangle {
         id: rect
-        color: "#dedede"
+        color: "#4a5259"
 
         Layout.minimumHeight: parent.height
         Layout.minimumWidth: parent.height
 
         border.width: 1
+        border.color: "#2a3137"
 
         Image {
             id: thumbnail
@@ -60,30 +75,6 @@ RowLayout {
             source: root.imgSource.length > 0 ? "file://" + root.imgSource : ""
         }
 
-        Button {
-            anchors.bottom: thumbnail.bottom
-            anchors.bottomMargin: -5
-            anchors.horizontalCenter: thumbnail.horizontalCenter
-            text: qsTr("Select");
-            onClicked: _fileDialog.open()
-            width: 50
-            height: 15
-            style: ButtonStyle {
-                label: Text {
-                    renderType: Text.NativeRendering
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pointSize: 10
-                    text: control.text
-                }
-                background: Rectangle {
-                    color: control.pressed ? "#71AEE3" : "#eee"
-                    border.width: 1
-                    border.color: "darkgrey"
-                    radius: 3
-                }
-            }
-        }
     }
 
     FileDialog {

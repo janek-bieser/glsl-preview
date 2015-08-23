@@ -21,8 +21,8 @@ Item {
         id: colorDisplay
         anchors.fill: parent
         border.width: 1
+        border.color: "#2a3137"
         color: "black"
-        radius: 5
     }
 
     MouseArea {

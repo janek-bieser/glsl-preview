@@ -1,8 +1,7 @@
 import QtQuick 2.4
 
-Rectangle {
-    height: 80
-    color: "#f3f3f3"
+Item {
+    height: 72
 
     property var uniformCache
 
@@ -30,7 +29,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         height: 1
-        color: "#999"
+        color: "#2a3137"
     }
 
     function readCachedValue() {

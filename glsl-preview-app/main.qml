@@ -1,10 +1,13 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.3
+import QtQuick.Controls.Styles 1.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 
 import QtGraphicalEffects 1.0
+
+import "styles"
 
 ApplicationWindow {
     id: window
@@ -61,11 +64,6 @@ ApplicationWindow {
             MenuItem {
                 text: shaderInspector.hidden ? qsTr("&Show Inspector") : qsTr("&Hide Inspector")
                 onTriggered: {
-                    //var newMinWidth = 0;
-                    //if (shaderInspector.hidden) {
-                    //    newMinWidth = 375
-                    //}
-                    //shaderInspector.Layout.minimumWidth = newMinWidth;
                     shaderInspector.toggleHidden()
                 }
                 shortcut: "Ctrl+i"
@@ -126,7 +124,6 @@ ApplicationWindow {
                     height: 128
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
-                    //anchors.topMargin: 0
                 }
 
                 Label {
@@ -165,6 +162,14 @@ ApplicationWindow {
 
         anchors.fill: parent
 
+        handleDelegate: Rectangle {
+            width: 1
+            color: "#1F2429"
+
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+        }
+
         Inspector {
             id: shaderInspector
 
@@ -188,10 +193,10 @@ ApplicationWindow {
             handleDelegate: Rectangle {
                 id: viewportConsoleDivider
                 height: 12
-                color: "#d5d5d5"
+                color: "#343c44"
 
                 border.width: 1
-                border.color: "#646464"
+                border.color: "#1F2429"
                 anchors.margins: -1
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -203,9 +208,6 @@ ApplicationWindow {
 
                 Layout.fillHeight: true
                 Layout.minimumHeight: 100
-
-                //anchors.left: parent.left
-                //anchors.right: parent.right
             }
 
             Item {
@@ -267,6 +269,8 @@ ApplicationWindow {
                     textColor: "#222"
                     font.family: "Monaco"
                     font.pointSize: 11
+
+                    style: SLPTextAreaStyle{}
 
                     Connections {
                         target: Logger
