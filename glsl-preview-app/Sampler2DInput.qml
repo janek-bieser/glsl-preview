@@ -82,7 +82,7 @@ RowLayout {
         selectFolder: false
         selectMultiple: false
 
-        nameFilters: ["Image Files (*.png *.PNG)"]
+        nameFilters: ["Image Files (*.png *.PNG *.jpg *.JPG *.jpeg *.JPEG)"]
 
         onSelectionAccepted: {
             var img = fileUrl.toString();
