@@ -26,8 +26,10 @@ GLViewRenderer::GLViewRenderer() : QQuickFramebufferObject::Renderer()
     m_backgroundRenderable = NULL;
     m_camZPos = 1;
 
-    m_vertexSource = "/Users/janekbieser/Desktop/shader_test/simple.vs";
-    m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/simple.fs";
+    //m_vertexSource = "/Users/janekbieser/Desktop/shader_test/src/pbr2.vs";
+    //m_fragmentSource = "/Users/janekbieser/Desktop/shader_test/src/pbr2.fs";
+    m_vertexSource = "";
+    m_fragmentSource = "";
 }
 
 GLViewRenderer::~GLViewRenderer()
@@ -111,9 +113,11 @@ void GLViewRenderer::render()
     }
 
     if (m_currentRenderable) {
-        m_program->bind();
+        //m_program->bind();
+        m_currentProgram->bind();
 
-        GLuint progId = m_program->programId();
+        //GLuint progId = m_program->programId();
+        GLuint progId = m_currentProgram->programId();
 
         glm::mat4 modelMat = glm::translate(glm::vec3(0, 0, 0));
 
@@ -181,7 +185,7 @@ void GLViewRenderer::updateUniform(const QVariantMap& uniform)
     int valuesLen = values.length();
 
     if (!m_uniformCache.contains(name)) {
-        GLuint progId = m_program->programId();
+        GLuint progId = m_currentProgram->programId();
         GLint loc = glGetUniformLocation(progId, name.toStdString().c_str());
 
         if (loc >= 0) {
@@ -266,6 +270,12 @@ void GLViewRenderer::selectModel(const QVariantMap &modelInfo)
 
 void GLViewRenderer::compileProgram()
 {
+    if (m_vertexSource == "" || m_fragmentSource == "") {
+        Logger::info("Using default shader.");
+        m_currentProgram = ShaderLibrary::getShader(ShaderLibrary::SolidFillShader);
+        return;
+    }
+
     qDebug() << "Loading Shader(" << m_vertexSource << "," << m_fragmentSource << ")";
     QOpenGLShader vertexShader(QOpenGLShader::Vertex);
     vertexShader.compileSourceFile(m_vertexSource);
@@ -294,6 +304,8 @@ void GLViewRenderer::compileProgram()
     if (progLog.size() > 0) {
         Logger::error(progLog);
     }
+
+    m_currentProgram = m_program;
 }
 
 void GLViewRenderer::setupGL()
@@ -311,7 +323,10 @@ void GLViewRenderer::setupGL()
 
     ShaderLibrary::compileAll();
 
-    compileProgram();
+    //compileProgram();
+    m_program = nullptr;
+    m_currentProgram = ShaderLibrary::getShader(ShaderLibrary::SolidFillShader);
+
     parseUniforms();
 
     glEnable(GL_CULL_FACE);
@@ -356,7 +371,7 @@ QString stringType(GLenum type)
 
 void GLViewRenderer::parseUniforms()
 {
-    GLuint progId = m_program->programId();
+    GLuint progId = m_currentProgram->programId();
     GLint numActiveUniforms;
     glGetProgramiv(progId, GL_ACTIVE_UNIFORMS, &numActiveUniforms);
 
@@ -388,7 +403,7 @@ void GLViewRenderer::updateUniformCache(const QList<ShaderUniform*>& uniforms)
     QMap<QString, UniformCache*> newCache;
 
     int len = uniforms.size();
-    GLuint progId = m_program->programId();
+    GLuint progId = m_currentProgram->programId();
 
     for (int i = 0; i < len; i++) {
         ShaderUniform* s = uniforms[i];

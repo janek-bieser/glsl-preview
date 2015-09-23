@@ -44,6 +44,7 @@ signals:
 
 private:
     QOpenGLShaderProgram* m_program;
+    QOpenGLShaderProgram* m_currentProgram;
     bool m_initialized;
     QString m_glVersion;
     QColor m_backgroundColor;

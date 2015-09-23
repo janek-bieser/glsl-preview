@@ -3,8 +3,9 @@
 
 const char* PositionOnlyVertexSource = "#version 400\n"
         "layout(location=0) in vec3 slp_Vertex;\n"
+        "uniform mat4 slp_MVPMatrix;\n"
         "void main() {\n"
-        "    gl_Position = vec4(slp_Vertex, 1);\n"
+        "    gl_Position = slp_MVPMatrix * vec4(slp_Vertex, 1);\n"
         "}";
 
 const char* PositionOutVertexSource = "#version 400\n"

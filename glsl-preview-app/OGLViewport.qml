@@ -2,6 +2,7 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.2
+import QtQuick.Layouts 1.1
 
 import GLRendering 1.0
 import "styles"
@@ -204,4 +205,3 @@ Item {
         viewport.updateUniform(uniform);
     }
 }
-
