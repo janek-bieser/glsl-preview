@@ -6,6 +6,9 @@
 extern "C" {
 #endif
 
+/*!
+ * Possible states for mesh_loader_result.
+ */
 typedef enum mesh_loader_status
 {
     MESH_LOADER_SUCCESS,
@@ -14,17 +17,26 @@ typedef enum mesh_loader_status
     MESH_LOADER_PARSE_ERROR
 } mesh_loader_status_t;
 
+/*!
+ * Represents a vertex inside an OBJ file.
+ */
 typedef struct obj_vertex {
     float x;
     float y;
     float z;
 } obj_vertex_t;
 
+/*!
+ * Represents a texture coordinate inside an OBJ file.
+ */
 typedef struct obj_tex_coord {
     float u;
     float v;
 } obj_tex_coord_t;
 
+/*!
+ * Represents a mesh.
+ */
 typedef struct mesh
 {
     obj_vertex_t* vertices;
@@ -39,13 +51,26 @@ typedef struct mesh
     int32_t _imax;
 } mesh_t;
 
+/*!
+ * Result of a NewMeshFromOBJFile call.
+ */
 typedef struct mesh_loader_result
 {
     mesh_t mesh;
     mesh_loader_status_t status;
 } mesh_loader_result_t;
 
+/*!
+ * \brief Create a new mesh from an OBJ file.
+ * \param filename Path to the OBJ file.
+ * \return A mesh loader result.
+ */
 mesh_loader_result_t NewMeshFromOBJFile(const char* filename);
+
+/*!
+ * \brief Deletes a mesh.
+ * \param mesh The mesh to delete.
+ */
 void DeleteMesh(mesh_t* mesh);
 
 #ifdef __cplusplus

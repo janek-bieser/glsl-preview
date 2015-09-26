@@ -6,9 +6,16 @@
 #include "renderable.h"
 #include "../obj_loader.h"
 
+/*!
+ * \brief A Generic OBJModel Renderable.
+ */
 class OBJModel : public Renderable
 {
 public:
+    /*!
+     * \brief Create an Renderable based on an .obj object.
+     * \param path Path to the OBJ File.
+     */
     OBJModel(const QString& path);
     ~OBJModel();
 

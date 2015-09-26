@@ -9,6 +9,9 @@
 class ShaderLibrary
 {
 public:
+    /*!
+     * \brief All builtin shader type. Pass one of these to ShaderLibrary::getShader.
+     */
     enum BuiltinShader {
         SolidFillShader = 0,
         CheckerShader,

@@ -4,12 +4,19 @@
 #include <qopengl.h>
 #include "renderable.h"
 
+/*!
+ * \brief A Cube Renderable
+ */
 class Cube : public Renderable
 {
 public:
+    /*!
+     * \brief Create a cube of a certain size.
+     * \param size
+     */
     Cube(GLfloat size);
 
-    void render();
+    void render() override;
 
 private:
     GLfloat m_size;

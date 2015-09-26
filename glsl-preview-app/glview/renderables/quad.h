@@ -4,9 +4,17 @@
 #include <qopengl.h>
 #include "renderable.h"
 
+/*!
+ * \brief A Quad Renderable.
+ */
 class Quad : public Renderable
 {
 public:
+    /*!
+     * \brief Create a Quad object.
+     * \param width
+     * \param height
+     */
     Quad(GLfloat width, GLfloat height);
 
     void render() override;

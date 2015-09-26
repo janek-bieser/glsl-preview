@@ -10,6 +10,9 @@
 #include "renderables/renderable.h"
 #include "ucache/uniformcache.h"
 
+/*!
+ * \brief Renderer for GLView.
+ */
 class GLViewRenderer : public QObject, public QQuickFramebufferObject::Renderer
 {
     Q_OBJECT
@@ -24,22 +27,67 @@ public:
     QString glVersion() const;
 
 public slots:
+    /*!
+     * \brief Sets the background color. This will be used inside the <code>glClear</code> call.
+     * \param color The background color.
+     */
     void setBackgroundColor(QColor color);
+
+    /*!
+     * \brief Update the value of a uniform variable
+     * \param uniform Uniform information.
+     */
     void updateUniform(const QVariantMap& uniform);
+
+    /*!
+     * \brief Load new shader source code.
+     * \param vertex Path to vertex shader source.
+     * \param fragment Path to fragment shader source.
+     */
     void loadShader(const QString& vertex, const QString& fragment);
+
+    /*!
+     * \brief Recompile the current shader program.
+     */
     void reloadProgram();
+
+    /*!
+     * \brief Select a 3D model to render.
+     * \param modelInfo Model information.
+     */
     void selectModel(const QVariantMap& modelInfo);
 
+    /*!
+     * \brief Rotate the model.
+     * \param rotation X and Y rotation
+     */
     void rotate(QPointF rotation);
+
+    /*!
+     * \brief Move the camera in and out.
+     * \param zMovement The amount of movement on the z-axis.
+     */
     void camMove(GLfloat zMovement);
 
 signals:
+    /*!
+     * \brief Emits this signel when the OpenGL Version is detected.
+     * \param version OpenGL version.
+     */
     void glVersionChanged(const QString& version);
     void backgroundColorChanged(QColor color);
     void error(const QString& error);
     void message(const QString& type, const QString& message);
 
-    void uniformsFound(const QList<ShaderUniform*>& uniform);
+    /*!
+     * \brief Emits this signal afer the shader source is analysed and uniform variables are found.
+     * \param uniforms list of the uniforms
+     */
+    void uniformsFound(const QList<ShaderUniform*>& uniforms);
+
+    /*!
+     * \brief Emitted when uniform parsing is complete.
+     */
     void uniformParsingCompleted();
 
 private:

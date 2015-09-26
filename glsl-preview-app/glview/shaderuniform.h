@@ -3,6 +3,9 @@
 
 #include <QObject>
 
+/*!
+ * \brief Uniform variable info which will be sent to the UI to display the correct inputs.
+ */
 class ShaderUniform : public QObject
 {
     Q_OBJECT
@@ -11,6 +14,13 @@ class ShaderUniform : public QObject
     Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
 public:
     explicit ShaderUniform(QObject *parent = 0);
+
+    /*!
+     * \brief Create a shader uniform.
+     * \param name Uniform name
+     * \param type Uniform type (e.g float, sampler2D...)
+     * \param parent parent QObject, defaults to <code>NULL</code>
+     */
     explicit ShaderUniform(const QString& name, const QString& type, QObject* parent = 0);
     explicit ShaderUniform(const ShaderUniform& other, QObject* parent = 0);
     ~ShaderUniform();

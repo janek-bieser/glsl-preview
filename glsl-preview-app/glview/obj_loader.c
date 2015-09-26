@@ -95,7 +95,7 @@ static inline int GetFaceElementCount(const char* face_str)
 obj_info_t
 GetOBJInfo(FILE* obj_file)
 {
-    obj_info_t info = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    obj_info_t info = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     rewind(obj_file);
 
     char line[128];

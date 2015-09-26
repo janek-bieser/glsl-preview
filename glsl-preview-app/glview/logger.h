@@ -3,13 +3,29 @@
 
 #include <QObject>
 
+/*!
+ * \brief Logging utility.
+ */
 class Logger : public QObject
 {
     Q_OBJECT
 public:
+    /*!
+     * \brief Get logger singleton instance.
+     * \return Logger instance.
+     */
     static Logger& instance();
 
+    /*!
+     * \brief Utility to log an error message.
+     * \param message The error message.
+     */
     static void error(const QString& message);
+
+    /*!
+     * \brief Utility to log an info message.
+     * \param message The info message.
+     */
     static void info(const QString& message);
 
 signals:

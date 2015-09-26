@@ -14,7 +14,7 @@ VecUniformCache::VecUniformCache(const VecUniformCache &other)
     m_numComponent = other.m_numComponent;
     m_location = other.m_location;
     m_values = (GLfloat*) calloc(m_numComponent, sizeof(GLfloat));
-    for (int i = 0; i < m_numComponent; i++) {
+    for (unsigned int i = 0; i < m_numComponent; i++) {
         m_values[i] = other.m_values[i];
     }
 }
@@ -56,7 +56,7 @@ QString VecUniformCache::typeString()
     case 2:
     case 3:
     case 4:
-        type = "vec" + componentCount();
+        type = "vec" + QString(componentCount());
         break;
     default:
         qDebug() << "unknown vector type";
