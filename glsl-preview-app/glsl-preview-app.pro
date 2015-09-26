@@ -49,7 +49,6 @@ HEADERS += \
     glview/ucache/uniformcache.h \
     glview/ucache/vecuniformcache.h \
     glview/ucache/sampler2duniformcache.h \
-    glview/ucache/stb_image.h \
     glview/obj_loader.h \
     glview/renderables/objmodel.h \
     glview/logger.h \
