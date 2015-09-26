@@ -6,8 +6,12 @@
 extern "C" {
 #endif
 
+/** \addtogroup OBJ-Loader
+ *  @{
+ */
+
 /*!
- * Possible states for mesh_loader_result.
+ * \brief Possible states for mesh_loader_result.
  */
 typedef enum mesh_loader_status
 {
@@ -18,7 +22,7 @@ typedef enum mesh_loader_status
 } mesh_loader_status_t;
 
 /*!
- * Represents a vertex inside an OBJ file.
+ * \brief Represents a vertex inside an OBJ file.
  */
 typedef struct obj_vertex {
     float x;
@@ -27,7 +31,7 @@ typedef struct obj_vertex {
 } obj_vertex_t;
 
 /*!
- * Represents a texture coordinate inside an OBJ file.
+ * \brief Represents a texture coordinate inside an OBJ file.
  */
 typedef struct obj_tex_coord {
     float u;
@@ -35,7 +39,7 @@ typedef struct obj_tex_coord {
 } obj_tex_coord_t;
 
 /*!
- * Represents a mesh.
+ * \brief Represents a mesh.
  */
 typedef struct mesh
 {
@@ -52,7 +56,7 @@ typedef struct mesh
 } mesh_t;
 
 /*!
- * Result of a NewMeshFromOBJFile call.
+ * \brief Result of a NewMeshFromOBJFile call.
  */
 typedef struct mesh_loader_result
 {
@@ -72,6 +76,8 @@ mesh_loader_result_t NewMeshFromOBJFile(const char* filename);
  * \param mesh The mesh to delete.
  */
 void DeleteMesh(mesh_t* mesh);
+
+/** @}*/
 
 #ifdef __cplusplus
 }

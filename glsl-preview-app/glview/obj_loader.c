@@ -14,6 +14,9 @@ static const mesh_loader_result_t DEFAULT_RESULT = {
     MESH_LOADER_CANT_OPEN_FILE
 };
 
+/*!
+ * \brief Information about an OBJ file (e.g vertex count, normal count...).
+ */
 typedef struct obj_info
 {
     int vcount;
@@ -29,6 +32,9 @@ typedef struct obj_info
     int felem_count;
 } obj_info_t;
 
+/*!
+ * \brief Represents a face inside an OBJ file.
+ */
 typedef struct obj_face
 {
     obj_vertex_t v1;

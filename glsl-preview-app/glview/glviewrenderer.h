@@ -11,7 +11,7 @@
 #include "ucache/uniformcache.h"
 
 /*!
- * \brief Renderer for GLView.
+ * \brief Renderer for GLViewport.
  */
 class GLViewRenderer : public QObject, public QQuickFramebufferObject::Renderer
 {
