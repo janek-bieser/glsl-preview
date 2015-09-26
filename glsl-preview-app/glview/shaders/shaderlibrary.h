@@ -3,6 +3,9 @@
 
 #include <qopenglshaderprogram.h>
 
+/*!
+ * \brief Utility class for builtin shaders.
+ */
 class ShaderLibrary
 {
 public:
@@ -12,12 +15,20 @@ public:
         BuiltinShaderCount
     };
 
+    /*!
+     * \brief Compiles all the built-in shaders.
+     */
     static void compileAll();
+
+    /*!
+     * \brief Get a shader object from the library.
+     * \param shader The type of shader to get.
+     * \return The shader object
+     */
     static QOpenGLShaderProgram* getShader(BuiltinShader shader);
 
-public:
+private:
     ShaderLibrary();
-
     static QOpenGLShaderProgram* shaders[BuiltinShaderCount];
 };
 
