@@ -31,9 +31,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 INCLUDEPATH += glm
-INCLUDEPATH += /usr/local/Cellar/freeimage/3.17.0/include
-
-LIBS += -L/usr/local/Cellar/freeimage/3.17.0/lib -lfreeimage
+LIBS += -lfreeimage
 
 HEADERS += \
     glview/glviewport.h \
