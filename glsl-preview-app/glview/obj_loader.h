@@ -1,5 +1,10 @@
 #pragma once
 
+/*
+ * The obj_loader library contains some utility functions to load a 3D
+ * model from an .obj file.
+ */
+
 #include <stdint.h>
 
 #ifdef __cplusplus
