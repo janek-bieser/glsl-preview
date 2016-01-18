@@ -31,6 +31,8 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 INCLUDEPATH += glm
+INCLUDEPATH += /usr/local/include
+LIBS += -L/usr/local/lib
 LIBS += -lfreeimage
 
 HEADERS += \

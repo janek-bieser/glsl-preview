@@ -1,33 +1,33 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Inspector.qml</file>
-        <file>OGLViewport.qml</file>
-        <file>ShaderSelectionMenu.qml</file>
-        <file>FileInput.qml</file>
-        <file>LabeledNumberInput.qml</file>
-        <file>LabeledVectorInput.qml</file>
-        <file>NumberField.qml</file>
-        <file>NumberInput.qml</file>
-        <file>TriangleIcon.qml</file>
-        <file>VectorInput.qml</file>
-        <file>ColorInput.qml</file>
-        <file>ColorPicker.qml</file>
-        <file>VecDelegate.qml</file>
-        <file>ColorDelegate.qml</file>
-        <file>Sampler2DDelegate.qml</file>
-        <file>Sampler2DInput.qml</file>
-        <file>UniformCache.js</file>
-        <file>ShaderBuiltins.qml</file>
-        <file>ShaderSelectionDialog.qml</file>
-        <file>styles/SLPButtonStyle.qml</file>
-        <file>styles/SLPTextFieldStyle.qml</file>
-        <file>styles/SLPScrollViewStyle.qml</file>
-        <file>styles/SLPTextAreaStyle.qml</file>
+        <file>UI/TriangleIcon.qml</file>
+        <file>UI/ColorDelegate.qml</file>
+        <file>UI/ColorInput.qml</file>
+        <file>UI/ColorPicker.qml</file>
+        <file>UI/FileInput.qml</file>
+        <file>UI/Inspector.qml</file>
+        <file>UI/LabeledNumberInput.qml</file>
+        <file>UI/LabeledVectorInput.qml</file>
+        <file>UI/NumberField.qml</file>
+        <file>UI/NumberInput.qml</file>
+        <file>UI/OGLViewport.qml</file>
+        <file>UI/Sampler2DDelegate.qml</file>
+        <file>UI/Sampler2DInput.qml</file>
+        <file>UI/ShaderBuiltins.qml</file>
+        <file>UI/ShaderSelectionDialog.qml</file>
+        <file>UI/ShaderSelectionMenu.qml</file>
+        <file>UI/VecDelegate.qml</file>
+        <file>UI/VectorInput.qml</file>
+        <file>UI/UniformCache.js</file>
+        <file>UI/styles/SLPButtonStyle.qml</file>
+        <file>UI/styles/SLPScrollViewStyle.qml</file>
+        <file>UI/styles/SLPTextAreaStyle.qml</file>
+        <file>UI/styles/SLPTextFieldStyle.qml</file>
     </qresource>
-    <qresource prefix="/images">
-        <file alias="triangle.svg">images/triangle.svg</file>
-        <file alias="checker_bg.svg">images/checker_bg.svg</file>
-        <file alias="cube_256.png">images/cube_256.png</file>
+    <qresource prefix="/UI/images">
+        <file alias="checker_bg.svg">UI/images/checker_bg.svg</file>
+        <file alias="cube_256.png">UI/images/cube_256.png</file>
+        <file alias="triangle.svg">UI/images/triangle.svg</file>
     </qresource>
 </RCC>

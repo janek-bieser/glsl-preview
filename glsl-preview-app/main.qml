@@ -7,7 +7,8 @@ import QtQuick.Layouts 1.1
 
 import QtGraphicalEffects 1.0
 
-import "styles"
+import "UI"
+import "UI/styles"
 
 ApplicationWindow {
     id: window
@@ -119,7 +120,7 @@ ApplicationWindow {
                 anchors.centerIn: parent
                 Image {
                     id: aboutImg
-                    source: "images/cube_256.png"
+                    source: "UI/images/cube_256.png"
                     width: 128
                     height: 128
                     anchors.horizontalCenter: parent.horizontalCenter
