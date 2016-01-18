@@ -31,8 +31,11 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 INCLUDEPATH += glm
+
+# Without this Qt-Creator will not find brew insatlled FreeImage library on OSX.
 INCLUDEPATH += /usr/local/include
 LIBS += -L/usr/local/lib
+
 LIBS += -lfreeimage
 
 HEADERS += \

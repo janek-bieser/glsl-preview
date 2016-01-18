@@ -10,15 +10,16 @@ repository you can use `git submodule update --init` to get the submodule.
 
 Also make sure to install the
 [FreeImage](http://freeimage.sourceforge.net/download.html) library somewhere on
-you PATH (e.g. OSX: `brew install freeimage`). If you install it somewhere else
-you have to edit `glsl-preview-app.pro`.
+your PATH (e.g. OSX: `brew install freeimage`). If you install it somewhere else
+or for some reason Qt-Creator cannot find the library you have to edit
+`glsl-preview-app.pro`.
 
 ```
 # Add Include Path
 INCLUDEPATH += /path/to/freeimage/include
 
-# Change 'LIBS += -lfreeimage' to
-LIBS += -L/path/to/freeimage/lib -lfreeimage
+# Add Library Directory
+LIBS += -L/path/to/freeimage/lib
 ```
 
 This project uses FreeImage version 3.17.0.
