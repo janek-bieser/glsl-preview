@@ -391,10 +391,8 @@ void GLViewRenderer::parseUniforms()
         foundUniforms.push_back(uniform);
     }
 
-    if (foundUniforms.size() > 0) {
-        updateUniformCache(foundUniforms);
-        emit uniformsFound(foundUniforms);
-    }
+    updateUniformCache(foundUniforms);
+    emit uniformsFound(foundUniforms);
 }
 
 void GLViewRenderer::updateUniformCache(const QList<ShaderUniform*>& uniforms)
