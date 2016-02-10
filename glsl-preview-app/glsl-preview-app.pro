@@ -3,8 +3,9 @@ TEMPLATE = app
 QT += qml quick widgets
 
 CONFIG += c++11
+#CONFIG -= app_bundle
 
-TARGET = "GLSL Preview"
+TARGET = "GLSL Preview"
 ICON = "glsl-preview.icns"
 
 SOURCES += main.cpp \
