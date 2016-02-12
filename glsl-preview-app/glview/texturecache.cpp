@@ -2,7 +2,8 @@
 #include <qmap.h>
 #include <qstack.h>
 #include <qdebug.h>
-#include <FreeImage.h>
+#include <QImage>
+#include <QGLWidget>
 #include "logger.h"
 
 static QMap<QString, TextureCache::TextureInfo> cache;
@@ -34,29 +35,30 @@ void TextureCache::LoadTexture(const QString &imgpath)
         return;
     }
 
-    //qDebug() << cache.size();
-
     if (availableSlots.size() == 0) {
         Logger::error("Full Texture Cache. Cannot load " + imgpath);
         return;
     }
 
-    TextureInfo info = GetNextTextureInof();
-
     const char* image_source = imgpath.toStdString().c_str();
-    FIBITMAP* bitmap = FreeImage_Load(FreeImage_GetFileType(image_source, 0), image_source);
 
-    if (!bitmap) {
+    QImage img;
+    if (!img.load(image_source)) {
         Logger::error("Cannot load texture: " + imgpath);
         return;
     }
 
+    QImage glFormattedImage = QGLWidget::convertToGLFormat(img);
 
-    FIBITMAP* bitmap32bit = FreeImage_ConvertTo32Bits(bitmap);
-    FreeImage_Unload(bitmap);
+    if (glFormattedImage.isNull()) {
+        Logger::error("Cannot convert texture to OpenGL format: " + imgpath);
+        return;
+    }
 
-    int width = FreeImage_GetWidth(bitmap32bit);
-    int height = FreeImage_GetHeight(bitmap32bit);
+    TextureInfo info = GetNextTextureInof();
+
+    int width = glFormattedImage.width();
+    int height = glFormattedImage.height();
 
     glActiveTexture(GL_TEXTURE0 + info.slot);
     glGenTextures(1, &info.texId);
@@ -68,11 +70,9 @@ void TextureCache::LoadTexture(const QString &imgpath)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, (void*)FreeImage_GetBits(bitmap32bit));
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, glFormattedImage.bits());
 
     cache[imgpath] = info;
-
-    FreeImage_Unload(bitmap32bit);
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glActiveTexture(GL_TEXTURE0);

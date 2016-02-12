@@ -112,12 +112,13 @@ ApplicationWindow {
             anchors.fill: parent
             color: "#eee"
             implicitWidth: 300
-            implicitHeight: 480
+            implicitHeight: 370
 
             Item {
                 width: parent.implicitWidth
-                height: parent.implicitHeight - 80
-                anchors.centerIn: parent
+                height: parent.implicitHeight
+                anchors.horizontalCenter: parent.horizontalCenter
+
                 Image {
                     id: aboutImg
                     source: "UI/images/cube_256.png"
@@ -125,6 +126,7 @@ ApplicationWindow {
                     height: 128
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
+                    anchors.topMargin: 30
                 }
 
                 Label {
@@ -145,14 +147,14 @@ ApplicationWindow {
 
             }
 
-            TextArea {
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.margins: 20
-                height: 80
-                text: "This software uses the FreeImage open source image library. See http://freeimage.sourceforge.net for details. FreeImage is used under the (GNU GPL or FIPL), version (license version)."
-            }
+            //TextArea {
+            //    anchors.bottom: parent.bottom
+            //    anchors.left: parent.left
+            //    anchors.right: parent.right
+            //    anchors.margins: 20
+            //    height: 80
+            //    text: "This software uses the FreeImage open source image library. See http://freeimage.sourceforge.net for details. FreeImage is used under the (GNU GPL or FIPL), version (license version)."
+            //}
         }
 
     }

@@ -1,9 +1,8 @@
 TEMPLATE = app
 
-QT += qml quick widgets
+QT += qml quick widgets opengl
 
 CONFIG += c++11
-#CONFIG -= app_bundle
 
 TARGET = "GLSL Preview"
 ICON = "glsl-preview.icns"
@@ -32,12 +31,6 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 INCLUDEPATH += glm
-
-# Without this Qt-Creator will not find brew insatlled FreeImage library on OSX.
-macx: INCLUDEPATH += /usr/local/include
-macx: LIBS += -L/usr/local/lib
-
-LIBS += -lfreeimage
 
 HEADERS += \
     glview/glviewport.h \
