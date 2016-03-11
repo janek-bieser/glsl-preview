@@ -22,7 +22,6 @@ private:
     GLfloat m_size;
     GLuint m_vertexArray;
     GLuint m_vertexBuffer;
-    GLuint m_indexBuffer;
 
     void setupBuffers();
 };
