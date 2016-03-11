@@ -11,6 +11,7 @@ Item {
 
     id: root
     property alias uniformModel: viewport.uniformModel
+    property alias glVersion: viewport.glVersion
 
     signal error(string messageText);
     signal info(string messageText);
@@ -180,6 +181,9 @@ Item {
                 } else if (type == "info") {
                     root.info(messageText);
                 }
+            }
+            onGlVersionChanged: {
+                console.log(viewport.glVersion)
             }
         }
     }

@@ -13,7 +13,7 @@ import "UI/styles"
 ApplicationWindow {
     id: window
 
-    title: qsTr("GLSL Preview")
+    title: qsTr("GLSL Preview") + " (OpenGL: " + glViewport.glVersion + ")"
     width: 900
     height: 600
 
@@ -147,14 +147,6 @@ ApplicationWindow {
 
             }
 
-            //TextArea {
-            //    anchors.bottom: parent.bottom
-            //    anchors.left: parent.left
-            //    anchors.right: parent.right
-            //    anchors.margins: 20
-            //    height: 80
-            //    text: "This software uses the FreeImage open source image library. See http://freeimage.sourceforge.net for details. FreeImage is used under the (GNU GPL or FIPL), version (license version)."
-            //}
         }
 
     }
