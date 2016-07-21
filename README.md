@@ -5,6 +5,8 @@ developing OpenGL Shaders. The original version (tag
 `fh-project-release`) was developed as a student project at
 [Fachhochschule Bingen](https://www.fh-bingen.de/).
 
+![GLSL Preview UI](./images/glsl-preview.jpg)
+
 ## Project Setup
 
 Clone the project and its submodules using the `--recursive` flag, or
