@@ -3,7 +3,7 @@
 *GLSL Preview* is a [Qt](http://www.qt.io/)-based tool which helps
 developing OpenGL Shaders. The original version (tag
 `fh-project-release`) was developed as a student project at
-[Fachhochschule Bingen](https://www.fh-bingen.de/).
+[Fachhochschule Bingen](https://www.th-bingen.de/).
 
 ![GLSL Preview UI](./images/glsl-preview.jpg)
 
